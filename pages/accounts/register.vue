@@ -1,0 +1,253 @@
+<template>
+  <div class="gs-auth">
+    <div class="gs-auth-container">
+      <div class="gs-auth-container-content">
+        <nuxt-link :to="{ name: 'index' }">
+          <img class="gs-auth-logo" :src="logo" alt />
+        </nuxt-link>
+        <div>
+          <h4 class="gs-auth-heading">Create your account</h4>
+          <el-form
+            ref="registerForm"
+            :model="form"
+            :rules="rules"
+            label-width="200px"
+            label-position="top"
+            class="gs-form"
+          >
+            <el-row :gutter="20" type="flex" class="flex-wrap">
+              <el-col :xs="24" :sm="12">
+                <el-form-item
+                  class="gs-form-item--auth"
+                  label="Firstname"
+                  prop="firstName"
+                >
+                  <el-input
+                    v-model="form.firstName"
+                    type="text"
+                    auto-complete="off"
+                    @focus="hasValue('firstName')"
+                    @blur="hasValue('firstName')"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item
+                  class="gs-form-item--auth"
+                  label="Lastname"
+                  prop="lastName"
+                >
+                  <el-input
+                    v-model="form.lastName"
+                    type="text"
+                    auto-complete="off"
+                    @focus="hasValue('lastName')"
+                    @blur="hasValue('lastName')"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20" type="flex" class="flex-wrap">
+              <el-col :xs="24" :sm="12">
+                <el-form-item
+                  class="gs-form-item--auth"
+                  label="Username"
+                  prop="userName"
+                >
+                  <el-input
+                    v-model="form.userName"
+                    type="text"
+                    auto-complete="off"
+                    @focus="hasValue('userName')"
+                    @blur="hasValue('userName')"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item
+                  class="gs-form-item--auth"
+                  label="Email"
+                  prop="email"
+                >
+                  <el-input
+                    v-model="form.email"
+                    type="email"
+                    auto-complete="off"
+                    @focus="hasValue('email')"
+                    @blur="hasValue('email')"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20" type="flex" class="flex-wrap">
+              <el-col :xs="24" :sm="12">
+                <el-form-item
+                  class="gs-form-item--auth"
+                  label="Phone Number"
+                  prop="phoneNumber"
+                >
+                  <el-input
+                    v-model="form.phoneNumber"
+                    type="text"
+                    auto-complete="off"
+                    @focus="hasValue('phoneNumber')"
+                    @blur="hasValue('phoneNumber')"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item
+                  class="gs-form-item--auth"
+                  label="Password"
+                  prop="password"
+                >
+                  <el-input
+                    v-model="form.password"
+                    type="password"
+                    auto-complete="off"
+                    @focus="hasValue('password')"
+                    @blur="hasValue('password')"
+                  >
+                    <i
+                      slot="suffix"
+                      :class="
+                        passwordFieldType === 'password'
+                          ? 'gs-icon--eye'
+                          : 'gs-icon--eye-off'
+                      "
+                      @click="showPassword"
+                    >
+                    </i>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-form-item class="d-flex justify-content-center">
+              <el-button
+                :loading="registering"
+                type="primary"
+                class="px-5"
+                @click="register"
+                >Register</el-button
+              >
+            </el-form-item>
+            <p class="text-center">
+              Got an account?
+              <strong
+                ><nuxt-link :to="{ name: 'accounts-login' }" class="dark-text"
+                  >Earn now</nuxt-link
+                ></strong
+              >
+            </p>
+          </el-form>
+        </div>
+      </div>
+      <div class="gs-auth-container-image"></div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Login',
+  data() {
+    return {
+      logo: '/logo.svg',
+      registering: false,
+      passwordFieldType: 'password',
+      form: {
+        firstName: '',
+        lastName: '',
+        userName: '',
+        email: '',
+        phoneNumber: '',
+        password: ''
+      },
+      rememberMe: '',
+      rules: {
+        firstName: [
+          {
+            required: true,
+            message: 'Field is required',
+            trigger: 'change'
+          }
+        ],
+        lastName: [
+          {
+            required: true,
+            message: 'Field is required',
+            trigger: 'change'
+          }
+        ],
+        userName: [
+          {
+            required: true,
+            message: 'Choose a username',
+            trigger: 'change'
+          }
+        ],
+        email: [
+          {
+            required: true,
+            message: "Email field can't be blank",
+            trigger: 'change'
+          },
+          {
+            type: 'email',
+            message: "Email isn't valid",
+            trigger: ['blur']
+          }
+        ],
+        phoneNumber: [
+          {
+            required: true,
+            message: 'Your phone number please',
+            trigger: 'change'
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: "Password field can't be blank.",
+            trigger: 'change'
+          }
+        ]
+      }
+    }
+  },
+  methods: {
+    showPassword() {
+      this.passwordFieldType =
+        this.passwordFieldType === 'password' ? 'text' : 'password'
+    },
+    hasValue(label) {
+      if (this.form[label] !== '') {
+        document.querySelector(`label[for=${label}]`).classList.add('has-value')
+      } else {
+        document
+          .querySelector(`label[for=${label}]`)
+          .classList.toggle('has-value')
+      }
+    },
+    register() {
+      this.registering = true
+      this.$refs.registerForm.validate((valid) => {
+        if (valid) {
+          this.$store.dispatch('auth/REGISTER', this.form).then(() => {
+            this.registering = false
+          })
+        } else {
+          this.registering = false
+          return false
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style scoped>
+.gs-auth-container-content > div {
+  width: 90% !important;
+}
+</style>

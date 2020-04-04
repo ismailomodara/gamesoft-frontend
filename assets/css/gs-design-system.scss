@@ -1,0 +1,114 @@
+/* ======= CUSTOM INPUT ============ */
+.gs-form-item--auth {
+  position: relative;
+  width: 100%;
+
+  .el-form-item__label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 15px;
+    font-size: 16px;
+    padding-bottom: 0;
+    transition: all 0.2s ease-out;
+  }
+
+  .has-value {
+    color: #4d00d2;
+    top: 15%;
+    font-size: 12px;
+    transition: all 0.2s ease-in;
+  }
+
+  .el-input__inner, .el-textarea__inner {
+    color: #070013;
+    font-weight: 500;
+    height: 60px;
+    padding: 15px 15px 0;
+    border: none;
+    border-bottom: 1px solid rgba(1, 21, 25, 0.1);
+    background-color: transparent;
+    border-radius: 0;
+    width: 100%;
+    transition: all 0.25s ease-out;
+  }
+
+  i {
+    position: relative;
+    top: 30%;
+    right: 10px;
+  }
+
+  .el-textarea__inner {
+    height: 80px;
+    padding-top: 28px;
+  }
+
+  .el-input__inner:focus, .el-textarea__inner:focus {
+    outline: 0 !important;
+    border-color: #4d00d2;
+    transition: all 0.25s ease-in;
+  }
+}
+
+
+/* ========== BUTTON =========== */
+.el-button {
+  transition: all 0.2s ease-in;
+}
+
+.el-button:not(.el-button--text):focus,
+.el-button:not(.el-button--text):hover {
+  outline: none;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-3px);
+  transition: all 0.2s ease-out;
+}
+
+/* ========== CARD ========== */
+.el-card {
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: none !important;
+}
+
+/* ======== POPOVER ======= */
+.el-popover {
+  width: 300px !important;
+  min-height: 200px;
+  top: 50px !important;
+}
+
+.el-popper[x-placement^="right"] .popper__arrow::after {
+  top: -40px;
+}
+
+
+/* ====== TAB NAV ====== */
+.el-tabs__header {
+  margin-bottom: 40px;
+}
+
+.el-tabs__item {
+  padding: 0 30px;
+  font-size: 16px;
+}
+
+
+/* ===== NOTIFICATION ======== */
+.el-message {
+  min-height: 80px;
+  left: unset;
+  right: 20px;
+  transform: translateY(0);
+
+  &.el-message--success {
+    background-color: #07001399;
+
+    i, .el-message__content {
+      color: #fff;
+      font-size: 18px;
+    }
+  }
+}
+

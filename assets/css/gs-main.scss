@@ -1,0 +1,263 @@
+$--color-primary: #4d00d2;
+$--color-text: #070013;
+
+::selection {
+  color: #4d00d2;
+  background: #4d00d230;
+}
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/Quicksand-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/Quicksand-Medium.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/Quicksand-SemiBold.woff') format('woff');
+}
+
+html, body {
+  font-size: 16px;
+  font-family: "Quicksand", sans-serif !important;
+  scroll-behavior: smooth;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+body {
+  color: $--color-text;
+  font-weight: 400;
+  line-height: 1.4;
+  background: #F3EFF9;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ccc;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #4d00d2;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 1.7rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.2rem;
+}
+
+h6 {
+  font-size: 0.8rem;
+}
+
+p {
+  line-height: 1.4;
+  font-size: 1rem;
+}
+
+a, a:hover {
+  color: $--color-primary;
+  text-decoration: none;
+}
+
+.text-primary {
+  color: $--color-primary !important;
+}
+
+.gs-pill {
+  height: 40px;
+  padding: 10px 25px;
+  background: #36afa440;
+  color: #36afa4;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.gs-pill:not(.no-hover):hover {
+  background: #36afa4;
+  color: #ffffff;
+  transition: all 0.2s ease-in;
+}
+
+.primary {
+  background: #4d00d220;
+  color: #4d00d2;
+}
+
+.primary:not(.no-hover):hover {
+  background: #4d00d2;
+  color: #ffffff;
+  transition: all 0.2s ease-in;
+}
+
+/* ======= AUTH PAGES ======== */
+.gs-auth {
+  width: 100%;
+  min-height: 100vh;
+  background: #F3EFF9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .gs-auth-container {
+    height: 80vh;
+    width: 75%;
+    display: flex;
+    border-radius: 8px;
+    box-shadow: -8px 32px 50px rgba(0, 0, 0, 0.08);
+
+    .gs-auth-container-content,
+    .gs-auth-container-image {
+      width: 50%;
+      height: 100%;
+      padding: 30px;
+    }
+
+    .gs-auth-container-content {
+      position: relative;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-bottom-left-radius: 8px;
+      border-top-left-radius: 8px;
+
+      .gs-auth-logo {
+        height: 40px;
+        width: auto;
+        position: absolute;
+        top: 50px;
+        left: 50px;
+      }
+
+      .gs-auth-heading {
+        color: $--color-text;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      > div {
+        width: 70%;
+        margin: auto;
+      }
+    }
+
+    .gs-auth-container-image {
+      border-bottom-right-radius: 8px;
+      border-top-right-radius: 8px;
+      background: $--color-primary;
+    }
+  }
+}
+
+.gs-app-layout-heading {
+  text-transform: uppercase;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #070013;
+}
+
+.gs-app-section-spacing:not(:last-child) {
+  margin-bottom: 30px;
+}
+
+.inverse .text-primary {
+  color: #fff !important;
+}
+
+.inverse .el-progress-bar__outer {
+  background-color: #ffffff30;
+}
+
+.inverse .el-progress-bar__inner {
+  background-color: #fff !important;
+}
+
+.inverse .el-progress__text {
+  color: #ffffff;
+}
+
+.gs-filters {
+  .el-form-item__label {
+    opacity: 0.5;
+    font-size: 14px;
+  }
+
+  .el-input__inner {
+    padding-top: 0;
+    height: auto;
+  }
+
+  i {
+    top: 5px;
+    font-size: 16px;
+  }
+}
+
+.gs-selection {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  margin-top: 10px;
+
+  .el-form-item__label {
+    margin-bottom: 0;
+    padding-bottom: 0 !important;
+    margin-right: 15px;
+  }
+
+  .el-radio.is-bordered {
+    margin-bottom: 0;
+    margin-right: 0;
+  }
+}
+
+
+/* ======= CARD ======= */
+
