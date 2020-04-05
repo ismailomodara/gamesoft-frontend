@@ -159,17 +159,26 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           if (
-            this.form.email !== 'moshood@alaran.com' ||
-            this.form.password !== 'moshood'
+            this.form.email === 'moshood@alaran.com' ||
+            this.form.password === 'moshood'
           ) {
-            this.loginError = true
-            this.loggingIn = false
-          } else {
             setTimeout(() => {
               this.$router.push({ name: 'app-dashboard' })
               this.$message.success('Login successful')
               this.loggingIn = false
             }, 2000)
+          } else if (
+            this.form.email === 'admin@admin.com' ||
+            this.form.password === 'admin'
+          ) {
+            setTimeout(() => {
+              this.$router.push({ name: 'admin-overview' })
+              this.$message.success('Login successful')
+              this.loggingIn = false
+            }, 2000)
+          } else {
+            this.loginError = true
+            this.loggingIn = false
           }
         } else {
           this.loggingIn = false

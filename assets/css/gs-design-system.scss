@@ -57,8 +57,8 @@
   transition: all 0.2s ease-in;
 }
 
-.el-button:not(.el-button--text):focus,
-.el-button:not(.el-button--text):hover {
+.el-button:not(.el-button--text):not(.el-button--mini):focus,
+.el-button:not(.el-button--text):not(.el-button--mini):hover {
   outline: none;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) !important;
   transform: translateY(-3px);
