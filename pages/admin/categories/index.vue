@@ -4,7 +4,9 @@
       <h3 class="gs-app-layout-heading">
         ALL CATEGORIES ({{ allCategoriesFiltered.length }})
       </h3>
-      <el-button type="primary" plain>Add New</el-button>
+      <nuxt-link :to="{ name: 'admin-categories-add' }">
+        <el-button type="primary" plain>Add New</el-button>
+      </nuxt-link>
     </div>
     <div class="gs-all-categories">
       <el-form class="gs-filters">

@@ -28,6 +28,7 @@
             <el-row :gutter="20" type="flex" class="flex-wrap">
               <el-col :xs="24" :sm="12">
                 <el-form-item
+                  v-custom-input="updateForm.firstName"
                   class="gs-form-item--auth"
                   label="Firstname"
                   prop="firstName"
@@ -36,13 +37,12 @@
                     v-model="updateForm.firstName"
                     type="text"
                     auto-complete="off"
-                    @focus="hasValue('firstName')"
-                    @blur="hasValue('firstName')"
                   ></el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12">
                 <el-form-item
+                  v-custom-input="updateForm.lastName"
                   class="gs-form-item--auth"
                   label="Lastname"
                   prop="lastName"
@@ -51,8 +51,6 @@
                     v-model="updateForm.lastName"
                     type="text"
                     auto-complete="off"
-                    @focus="hasValue('lastName')"
-                    @blur="hasValue('lastName')"
                   ></el-input>
                 </el-form-item>
               </el-col>
@@ -60,6 +58,7 @@
             <el-row :gutter="20" type="flex" class="flex-wrap">
               <el-col :xs="24" :sm="12">
                 <el-form-item
+                  v-custom-input="updateForm.userName"
                   class="gs-form-item--auth"
                   label="Username"
                   prop="userName"
@@ -68,13 +67,12 @@
                     v-model="updateForm.userName"
                     type="text"
                     auto-complete="off"
-                    @focus="hasValue('userName')"
-                    @blur="hasValue('userName')"
                   ></el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12">
                 <el-form-item
+                  v-custom-input="updateForm.email"
                   class="gs-form-item--auth"
                   label="Email"
                   prop="email"
@@ -84,8 +82,6 @@
                     disabled
                     type="email"
                     auto-complete="off"
-                    @focus="hasValue('email')"
-                    @blur="hasValue('email')"
                   ></el-input>
                 </el-form-item>
               </el-col>
@@ -93,6 +89,7 @@
             <el-row :gutter="20" type="flex" class="flex-wrap">
               <el-col :xs="24" :sm="12">
                 <el-form-item
+                  v-custom-input="updateForm.phoneNumber"
                   class="gs-form-item--auth"
                   label="Phone Number"
                   prop="phoneNumber"
@@ -101,8 +98,6 @@
                     v-model="updateForm.phoneNumber"
                     type="text"
                     auto-complete="off"
-                    @focus="hasValue('phoneNumber')"
-                    @blur="hasValue('phoneNumber')"
                   ></el-input>
                 </el-form-item>
               </el-col>
@@ -230,15 +225,6 @@ export default {
         this.$message.error('Avatar picture size can not exceed 2MB!')
       }
       return isJPG && isLt2M
-    },
-    hasValue(label) {
-      if (this.updateForm[label] !== '') {
-        document.querySelector(`label[for=${label}]`).classList.add('has-value')
-      } else {
-        document
-          .querySelector(`label[for=${label}]`)
-          .classList.toggle('has-value')
-      }
     },
     update() {
       //

@@ -12,6 +12,7 @@
         >
           <div class="mb-4">
             <el-form-item
+              v-custom-input="updateForm.currentPassword"
               class="gs-form-item--auth"
               label="Current Password"
               prop="currentPassword"
@@ -20,8 +21,6 @@
                 v-model="updateForm.currentPassword"
                 :type="currentPasswordFieldType"
                 auto-complete="off"
-                @focus="hasValue('currentPassword')"
-                @blur="hasValue('currentPassword')"
               >
                 <i
                   slot="suffix"
@@ -36,6 +35,7 @@
               </el-input>
             </el-form-item>
             <el-form-item
+              v-custom-input="updateForm.newPassword"
               class="gs-form-item--auth"
               label="New Password"
               prop="newPassword"
@@ -44,8 +44,6 @@
                 v-model="updateForm.newPassword"
                 :type="newPasswordFieldType"
                 auto-complete="off"
-                @focus="hasValue('newPassword')"
-                @blur="hasValue('newPassword')"
               >
                 <i
                   slot="suffix"
@@ -60,6 +58,7 @@
               </el-input>
             </el-form-item>
             <el-form-item
+              v-custom-input="updateForm.confirmNewPassword"
               class="gs-form-item--auth"
               label="Confirm New Password"
               prop="confirmNewPassword"
@@ -68,8 +67,6 @@
                 v-model="updateForm.confirmNewPassword"
                 :type="confirmNewPasswordFieldType"
                 auto-complete="off"
-                @focus="hasValue('confirmNewPassword')"
-                @blur="hasValue('confirmNewPassword')"
               >
                 <i
                   slot="suffix"
@@ -157,15 +154,6 @@ export default {
     showConfirmNewPassword() {
       this.confirmNewPasswordFieldType =
         this.confirmNewPasswordFieldType === 'password' ? 'text' : 'password'
-    },
-    hasValue(label) {
-      if (this.updateForm[label] !== '') {
-        document.querySelector(`label[for=${label}]`).classList.add('has-value')
-      } else {
-        document
-          .querySelector(`label[for=${label}]`)
-          .classList.toggle('has-value')
-      }
     },
     update() {
       //

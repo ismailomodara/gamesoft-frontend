@@ -15,13 +15,16 @@
             label-position="top"
             class="gs-form"
           >
-            <el-form-item class="gs-form-item--auth" label="Email" prop="email">
+            <el-form-item
+              v-custom-input="form.email"
+              class="gs-form-item--auth"
+              label="Email"
+              prop="email"
+            >
               <el-input
                 v-model="form.email"
                 type="text"
                 auto-complete="off"
-                @focus="hasValue('email')"
-                @blur="hasValue('email')"
               ></el-input>
             </el-form-item>
             <el-form-item class="d-flex justify-content-center">
@@ -77,15 +80,6 @@ export default {
     }
   },
   methods: {
-    hasValue(label) {
-      if (this.form[label] !== '') {
-        document.querySelector(`label[for=${label}]`).classList.add('has-value')
-      } else {
-        document
-          .querySelector(`label[for=${label}]`)
-          .classList.toggle('has-value')
-      }
-    },
     sendLink() {
       //
     }

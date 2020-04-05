@@ -18,6 +18,7 @@
             <el-row :gutter="20" type="flex" class="flex-wrap">
               <el-col :xs="24" :sm="12">
                 <el-form-item
+                  v-custom-input="form.firstName"
                   class="gs-form-item--auth"
                   label="Firstname"
                   prop="firstName"
@@ -26,13 +27,12 @@
                     v-model="form.firstName"
                     type="text"
                     auto-complete="off"
-                    @focus="hasValue('firstName')"
-                    @blur="hasValue('firstName')"
                   ></el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12">
                 <el-form-item
+                  v-custom-input="form.lastName"
                   class="gs-form-item--auth"
                   label="Lastname"
                   prop="lastName"
@@ -41,8 +41,6 @@
                     v-model="form.lastName"
                     type="text"
                     auto-complete="off"
-                    @focus="hasValue('lastName')"
-                    @blur="hasValue('lastName')"
                   ></el-input>
                 </el-form-item>
               </el-col>
@@ -50,6 +48,7 @@
             <el-row :gutter="20" type="flex" class="flex-wrap">
               <el-col :xs="24" :sm="12">
                 <el-form-item
+                  v-custom-input="form.userName"
                   class="gs-form-item--auth"
                   label="Username"
                   prop="userName"
@@ -58,13 +57,12 @@
                     v-model="form.userName"
                     type="text"
                     auto-complete="off"
-                    @focus="hasValue('userName')"
-                    @blur="hasValue('userName')"
                   ></el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12">
                 <el-form-item
+                  v-custom-input="form.email"
                   class="gs-form-item--auth"
                   label="Email"
                   prop="email"
@@ -73,8 +71,6 @@
                     v-model="form.email"
                     type="email"
                     auto-complete="off"
-                    @focus="hasValue('email')"
-                    @blur="hasValue('email')"
                   ></el-input>
                 </el-form-item>
               </el-col>
@@ -82,6 +78,7 @@
             <el-row :gutter="20" type="flex" class="flex-wrap">
               <el-col :xs="24" :sm="12">
                 <el-form-item
+                  v-custom-input="form.phoneNumber"
                   class="gs-form-item--auth"
                   label="Phone Number"
                   prop="phoneNumber"
@@ -90,13 +87,12 @@
                     v-model="form.phoneNumber"
                     type="text"
                     auto-complete="off"
-                    @focus="hasValue('phoneNumber')"
-                    @blur="hasValue('phoneNumber')"
                   ></el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12">
                 <el-form-item
+                  v-custom-input="form.password"
                   class="gs-form-item--auth"
                   label="Password"
                   prop="password"
@@ -105,8 +101,6 @@
                     v-model="form.password"
                     type="password"
                     auto-complete="off"
-                    @focus="hasValue('password')"
-                    @blur="hasValue('password')"
                   >
                     <i
                       slot="suffix"
@@ -219,15 +213,6 @@ export default {
     showPassword() {
       this.passwordFieldType =
         this.passwordFieldType === 'password' ? 'text' : 'password'
-    },
-    hasValue(label) {
-      if (this.form[label] !== '') {
-        document.querySelector(`label[for=${label}]`).classList.add('has-value')
-      } else {
-        document
-          .querySelector(`label[for=${label}]`)
-          .classList.toggle('has-value')
-      }
     },
     register() {
       this.registering = true
