@@ -27,11 +27,15 @@
               <p>4200</p>
             </div>
             <div>
-              <h6>Percentage</h6>
+              <h6>Win Rate</h6>
               <p>77%</p>
             </div>
             <div>
-              <h6>Best Category</h6>
+              <h6>Favorite Category</h6>
+              <p>Sports</p>
+            </div>
+            <div>
+              <h6>Most Played Category</h6>
               <p>Sports</p>
             </div>
           </div>
@@ -134,8 +138,8 @@ export default {
 }
 
 .gs-user-app-overview {
-  > div {
-    margin-bottom: 20px;
+  > div:not(:last-child) {
+    margin-bottom: 30px;
 
     h6 {
       font-weight: 600;

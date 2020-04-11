@@ -1,5 +1,15 @@
 <template>
   <div class="gs-activities">
+    <el-form class="gs-filters">
+      <el-form-item class="gs-form-item--auth" label="" prop="search">
+        <el-input
+          v-model="searchQuery"
+          type="text"
+          suffix-icon="gs-icon--search"
+          placeholder="Search transaction"
+        ></el-input>
+      </el-form-item>
+    </el-form>
     <el-table :data="tableData" style="width: 100%">
       <el-table-column prop="type" width="60">
         <template slot-scope="scope">
@@ -22,7 +32,10 @@
       </el-table-column>
       <el-table-column prop="date" label="Date"></el-table-column>
     </el-table>
-    <div class="d-flex justify-content-center my-3">
+    <div
+      v-if="$route.name.split('-')[1] !== 'users'"
+      class="d-flex justify-content-center my-3"
+    >
       <nuxt-link :to="{ name: 'app-activities' }">SEE ALL ACTIVITIES</nuxt-link>
     </div>
   </div>
@@ -41,6 +54,7 @@ export default {
   },
   data() {
     return {
+      searchQuery: '',
       tableData: [
         {
           type: 'debit',
@@ -86,7 +100,6 @@ export default {
 
 <style lang="scss" scoped>
 .gs-activities {
-  padding: 15px;
   border-radius: 10px;
   background: #fff;
 
@@ -118,5 +131,9 @@ export default {
     font-weight: 600;
     font-size: 12px;
   }
+}
+
+.gs-filters {
+  margin-top: 10px;
 }
 </style>
