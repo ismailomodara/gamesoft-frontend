@@ -5,6 +5,7 @@
         <nuxt-link :to="{ name: 'index' }">
           <img class="gs-auth-logo" :src="logo" alt />
         </nuxt-link>
+        <el-dialog></el-dialog>
         <div>
           <h4 class="gs-auth-heading">Create your account</h4>
           <el-form

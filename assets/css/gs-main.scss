@@ -264,5 +264,15 @@ a, a:hover {
 }
 
 
+.vue-csv-uploader {
+  .csv-import-checkbox {
+    display: none !important;
+  }
+
+  .table td, .table th {
+    vertical-align: middle;
+  }
+}
+
 /* ======= CARD ======= */
 

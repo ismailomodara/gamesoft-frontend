@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import StageItem from '~/components/Categories/StageItem'
-import StageItemShow from '~/components/Categories/StageItemShow'
+import StageItem from '~/components/Stage/StageItem'
+import StageItemShow from '~/components/Stage/StageItemShow'
 
 export default {
   name: 'Dashboard',

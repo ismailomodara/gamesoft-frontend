@@ -35,7 +35,11 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/element-ui', '@/plugins/directives'],
+  plugins: [
+    '@/plugins/element-ui',
+    '@/plugins/directives',
+    { src: '@/plugins/vue-csv-import', ssr: false }
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -62,6 +66,7 @@ export default {
    */
   build: {
     transpile: [/^element-ui/],
+    vendor: ['vue-csv-import'],
     /*
      ** You can extend webpack config here
      */

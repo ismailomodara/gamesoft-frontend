@@ -35,7 +35,7 @@
 
   i {
     position: relative;
-    top: 30%;
+    top: 10%;
     right: 10px;
   }
 
@@ -57,12 +57,20 @@
   transition: all 0.2s ease-in;
 }
 
-.el-button:not(.el-button--text):not(.el-button--mini):focus,
-.el-button:not(.el-button--text):not(.el-button--mini):hover {
+.el-button:not(.el-button--text):not(.el-button--mini):not(.el-button--small):focus,
+.el-button:not(.el-button--text):not(.el-button--mini):not(.el-button--small):hover {
   outline: none;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) !important;
   transform: translateY(-3px);
   transition: all 0.2s ease-out;
+}
+
+.el-button:focus {
+  outline: none !important;
+}
+
+.el-button--text {
+  padding: 15px 30px;
 }
 
 /* ========== CARD ========== */
@@ -112,3 +120,46 @@
   }
 }
 
+
+/* ===== SELECT ======== */
+.el-select {
+  width: 100%;
+}
+
+
+/* ===== MESSAGE BOX ===== */
+.el-message-box {
+  width: 500px;
+  padding: 30px;
+}
+
+/* ===== DIALOG ====== */
+.el-dialog__wrapper.large .el-dialog {
+  height: 85vh;
+}
+
+.el-dialog {
+  margin-top: 5vh !important;
+  overflow-y: scroll;
+}
+
+.el-dialog__header {
+  padding: 30px 50px 0;
+
+  .el-dialog__title {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+}
+
+.el-dialog__body {
+  padding: 50px;
+}
+
+@media (max-width: 1200px) {
+  .el-dialog {
+    width: 80% !important;
+  }
+}
