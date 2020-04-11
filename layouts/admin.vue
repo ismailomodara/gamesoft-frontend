@@ -42,7 +42,7 @@
           <i class="gs-icon--server"></i>
           <span>Categories</span>
         </el-menu-item>
-        <el-menu-item :route="{ name: 'admin-users' }" index="activities">
+        <el-menu-item :route="{ name: 'admin-users' }" index="users">
           <i class="gs-icon--users"></i>
           <span>Users</span>
         </el-menu-item>

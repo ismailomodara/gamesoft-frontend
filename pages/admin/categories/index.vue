@@ -126,9 +126,9 @@ export default {
         (data) =>
           !query ||
           data.title.toLowerCase().includes(query.toLowerCase()) ||
-          data.stages.includes(query) ||
-          data.total_questions.includes(query) ||
-          data.total_points.includes(query) ||
+          data.stages.toString().includes(query) ||
+          data.total_questions.toString().includes(query) ||
+          data.total_points.toString().includes(query) ||
           data.status.toLowerCase().includes(query.toLowerCase())
       )
     },

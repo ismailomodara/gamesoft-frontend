@@ -33,6 +33,10 @@
     transition: all 0.25s ease-out;
   }
 
+  .el-textarea__inner {
+    height: auto !important;
+  }
+
   i {
     position: relative;
     top: 10%;
