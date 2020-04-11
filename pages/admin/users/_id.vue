@@ -3,7 +3,7 @@
     <el-row type="flex" class="flex-wrap" :gutter="30">
       <el-col :lg="7">
         <el-card>
-          <div class="gs-user-avatar">
+          <div class="gs-user-card">
             <div class="w-100 mb-4 d-flex justify-content-end">
               <el-switch
                 v-model="status"
@@ -99,7 +99,7 @@ export default {
 </script>
 
 <style lang="scss">
-.gs-user-avatar {
+.gs-user-card {
   display: flex;
   flex-direction: column;
   align-items: center;

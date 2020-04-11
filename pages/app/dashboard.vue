@@ -28,8 +28,13 @@
           </div>
         </el-col>
         <el-col :lg="16">
-          <h3 class="gs-app-layout-heading">Recent Activities</h3>
-          <recent-activities></recent-activities>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="gs-app-layout-heading mb-0">Recent Activities</h3>
+            <nuxt-link :to="{ name: 'app-activities' }">SEE ALL</nuxt-link>
+          </div>
+          <el-card>
+            <recent-activities></recent-activities>
+          </el-card>
         </el-col>
       </el-row>
     </div>
@@ -96,5 +101,11 @@ export default {
       margin-bottom: 0;
     }
   }
+}
+
+a {
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 15px;
 }
 </style>

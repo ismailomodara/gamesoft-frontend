@@ -1,6 +1,6 @@
 <template>
   <div class="gs-activities">
-    <el-form class="gs-filters">
+    <el-form class="gs-filters" v-if="$route.name.split('-')[1] === 'users'">
       <el-form-item class="gs-form-item--auth" label="" prop="search">
         <el-input
           v-model="searchQuery"
@@ -32,12 +32,6 @@
       </el-table-column>
       <el-table-column prop="date" label="Date"></el-table-column>
     </el-table>
-    <div
-      v-if="$route.name.split('-')[1] !== 'users'"
-      class="d-flex justify-content-center my-3"
-    >
-      <nuxt-link :to="{ name: 'app-activities' }">SEE ALL ACTIVITIES</nuxt-link>
-    </div>
   </div>
 </template>
 
@@ -87,8 +81,8 @@ export default {
         {
           type: 'debit',
           transactionId: 'GST-DB03042020',
-          amount: '1,500',
-          description: 'Made a deposit',
+          amount: '800',
+          description: 'Made a withdrawal',
           date: '21st December, 2018'
         }
       ]

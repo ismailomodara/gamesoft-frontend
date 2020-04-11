@@ -4,9 +4,6 @@
       <h3 class="gs-app-layout-heading">
         ALL USERS ({{ allUsersFiltered.length }})
       </h3>
-      <nuxt-link :to="{ name: 'admin-categories-add' }">
-        <el-button type="primary" plain>Add New</el-button>
-      </nuxt-link>
     </div>
     <el-card>
       <el-form class="gs-filters">

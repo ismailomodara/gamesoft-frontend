@@ -50,8 +50,12 @@
           :route="{ name: 'admin-transactions' }"
           index="transactions"
         >
-          <i class="gs-icon--credit-card"></i>
+          <i class="gs-icon--clipboard"></i>
           <span>Transactions</span>
+        </el-menu-item>
+        <el-menu-item :route="{ name: 'admin-payments' }" index="payments">
+          <i class="gs-icon--credit-card"></i>
+          <span>Payments</span>
         </el-menu-item>
       </el-menu>
       <div class="gs-logout" @click="logout">

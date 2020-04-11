@@ -7,8 +7,8 @@
         ></el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="all">All</el-dropdown-item>
-          <el-dropdown-item command="credit">Credit CR</el-dropdown-item>
-          <el-dropdown-item command="debit">Debit DB</el-dropdown-item>
+          <el-dropdown-item command="approved">Approved</el-dropdown-item>
+          <el-dropdown-item command="unapproved">Unapproved</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <el-form-item class="gs-form-item--auth" label="" prop="search">
@@ -16,84 +16,65 @@
           v-model="searchQuery"
           type="text"
           suffix-icon="gs-icon--search"
-          placeholder="Search transaction by property"
+          placeholder="Search payment by property"
         ></el-input>
       </el-form-item>
     </el-form>
     <el-table :data="tableDataValue" style="width: 100%">
-      <el-table-column prop="type" width="60">
-        <template slot-scope="scope">
-          <span
-            v-if="scope.row.type === 'credit'"
-            class="gs-activity-type credit"
-            ><i class="gs-icon--arrow-up"></i
-          ></span>
-          <span v-else class="gs-activity-type debit"
-            ><i class="gs-icon--arrow-down"></i>
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="transactionId" label="Transaction Id" width="180">
-      </el-table-column>
-      <el-table-column prop="name" label="Name">
-        <template slot-scope="scope">
-          <h6>{{ scope.row.name }}</h6>
-          <p>{{ scope.row.email }}</p>
-        </template>
-      </el-table-column>
+      <el-table-column label="" width="60"> </el-table-column>
+      <el-table-column prop="name" label="Name"></el-table-column>
+      <el-table-column prop="email" label="Email"></el-table-column>
       <el-table-column prop="amount" label="Amount" width="120">
         <template slot-scope="scope"> &#8358; {{ scope.row.amount }} </template>
       </el-table-column>
-      <el-table-column prop="description" label="Description">
+      <el-table-column prop="date" label="Date"></el-table-column>
+      <el-table-column prop="status" label="Status" width="150">
+        <template slot-scope="scope">
+          <div v-if="scope.row.status === 'approved'" class="gs-pill success">
+            Approved
+          </div>
+          <div v-else class="gs-pill danger">Unapproved</div>
+        </template>
       </el-table-column>
-      <el-table-column prop="date" label="Date" width="170"></el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AdminTransactions',
+  name: 'AdminPayments',
   layout: 'admin',
   data() {
     return {
       searchQuery: '',
       tableData: [
         {
-          type: 'credit',
-          transactionId: 'GST-SDLF29323',
           name: 'Tolu Fakiyesi',
           email: 'tolu@fakiyesi.com',
           amount: '1,500',
-          description: 'Made a deposit',
-          date: '21st December, 2018'
+          status: 'approved',
+          date: '21st December, 2019'
         },
         {
-          type: 'credit',
-          transactionId: 'GST-SDLF29323',
           name: 'Hamza Bashir',
           email: 'hamza@bashir.com',
           amount: '2,500',
-          description: 'Made a deposit',
-          date: '21st December, 2018'
+          status: 'unapproved',
+          date: '21st December, 2019'
         },
         {
-          type: 'debit',
-          transactionId: 'GST-SDLF29323',
           name: 'Moshood Alaran',
           email: 'moshood@alaran.com',
           amount: '3,500',
-          description: 'Made a withdrawal',
-          date: '21st December, 2018'
+          status: 'unapproved',
+          date: '21st December, 2019'
         },
         {
-          type: 'credit',
-          transactionId: 'GST-SDLF29323',
           name: 'Deji Ibrahim',
           email: 'deji@ibrahim.com',
           amount: '4,500',
-          description: 'Made a deposit',
-          date: '21st December, 2018'
+          status: 'approved',
+          date: '21st December, 2019'
         }
       ]
     }
@@ -108,11 +89,9 @@ export default {
       return this.tableData.filter(
         (data) =>
           !query ||
-          data.type.toLowerCase().includes(query.toLowerCase()) ||
-          data.transactionId.toLowerCase().includes(query.toLowerCase()) ||
           data.name.toLowerCase().includes(query.toLowerCase()) ||
           data.email.toLowerCase().includes(query.toLowerCase()) ||
-          data.description.toLowerCase().includes(query.toLowerCase()) ||
+          data.status.toLowerCase().includes(query.toLowerCase()) ||
           data.amount.includes(query)
       )
     },
