@@ -212,6 +212,14 @@ a, a:hover {
   margin-bottom: 30px;
 }
 
+.dark {
+  background: #070013;
+
+  > * {
+    color: #fff !important;
+  }
+}
+
 .inverse .text-primary {
   color: #fff !important;
 }
@@ -274,5 +282,8 @@ a, a:hover {
   }
 }
 
+.cell a {
+  color: #606266;
+}
 /* ======= CARD ======= */
 

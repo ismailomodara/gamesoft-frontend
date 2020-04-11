@@ -71,8 +71,10 @@
               <template v-if="category.stages.length === 0">
                 <div
                   class="my-3 d-flex justify-content-center align-items-center"
+                  :style="{ cursor: 'pointer' }"
+                  @click="addStage = true"
                 >
-                  <div class="gs-add-stage" @click="addStage = true">
+                  <div class="gs-add-stage">
                     <i class="gs-icon--plus"></i>
                   </div>
                   <p class="mb-0 ml-2">Add New Stage</p>

@@ -39,7 +39,14 @@
             <div v-else class="gs-status-circle offline"></div>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="Name"> </el-table-column>
+        <el-table-column prop="name" label="Name">
+          <template slot-scope="scope">
+            <nuxt-link
+              :to="{ name: 'admin-users-id', params: { id: scope.row.id } }"
+              >{{ scope.row.name }}</nuxt-link
+            >
+          </template>
+        </el-table-column>
         <el-table-column prop="email" label="Email"> </el-table-column>
         <el-table-column prop="wallet_balance" label="Wallet Balance">
         </el-table-column>
@@ -60,11 +67,7 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <send-message
-      :show.sync="showSendMessage"
-      :user-id="userId"
-      :users="allUsers"
-    ></send-message>
+    <send-message :show.sync="showSendMessage" :user-id="userId"></send-message>
   </div>
 </template>
 
@@ -150,37 +153,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.gs-filters {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 20px 0;
-
-  .el-form-item {
-    margin-bottom: 0;
-    height: auto !important;
-    width: 300px;
-  }
-
-  .el-button {
-    margin-right: 10px;
-    display: flex;
-    align-items: center;
-
-    i {
-      margin-left: 5px;
-      font-size: 12px;
-    }
-
-    &:hover {
-      border-color: #7f828b;
-      color: #7f828b;
-      transform: translateY(0) !important;
-      box-shadow: none !important;
-    }
-  }
-}
-
 .gs-status-circle {
   display: block;
   height: 16px;

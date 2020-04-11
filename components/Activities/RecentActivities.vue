@@ -15,7 +15,7 @@
       </el-table-column>
       <el-table-column prop="transactionId" label="Transaction Id" width="180">
       </el-table-column>
-      <el-table-column prop="amount" label="Amount">
+      <el-table-column prop="amount" label="Amount" width="120">
         <template slot-scope="scope"> &#8358; {{ scope.row.amount }} </template>
       </el-table-column>
       <el-table-column prop="description" label="Description">
