@@ -34,9 +34,12 @@
         :router="true"
         class="gs-admin-layout-menu"
       >
-        <el-menu-item :route="{ name: 'admin-overview' }" index="overview">
-          <i class="gs-icon--bar-chart-2"></i>
-          <span>Overview</span>
+        <el-menu-item
+          :route="{ name: 'admin-leaderboard' }"
+          index="leaderboard"
+        >
+          <i class="gs-icon--"></i>
+          <span>Leaderboard</span>
         </el-menu-item>
         <el-menu-item :route="{ name: 'admin-categories' }" index="categories">
           <i class="gs-icon--server"></i>
@@ -103,16 +106,17 @@ $--sidebar-width: 20%;
 
 .gs-admin-layout {
   display: flex;
-  height: 100vh;
+  height: 100%;
   width: 100%;
-  overflow-y: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
 
   .gs-admin-layout-sidebar {
     width: $--sidebar-width;
     background: #ffffff;
-    height: 100%;
+    height: 100vh;
     padding: 40px 30px;
-    position: relative;
+    position: fixed;
 
     .gs-user {
       display: flex;
@@ -234,12 +238,19 @@ $--sidebar-width: 20%;
   }
 
   .gs-admin-layout-main {
+    position: relative;
+    left: $--sidebar-width;
     width: calc(100% - #{$--sidebar-width});
     height: 100%;
     background: #f3eff9;
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: auto;
+    padding-bottom: 80px;
+
+    > div {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
+    }
   }
 }
 </style>

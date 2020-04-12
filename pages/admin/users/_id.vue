@@ -98,7 +98,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .gs-user-card {
   display: flex;
   flex-direction: column;
