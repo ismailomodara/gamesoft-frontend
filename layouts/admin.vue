@@ -7,8 +7,8 @@
             <img src="@/assets/img/mosh.jpeg" alt />
           </div>
           <div class="gs-user-details">
-            <h6>Admin Admin</h6>
-            <p>admin@admin.com</p>
+            <h6>{{ name }}</h6>
+            <p>{{ email }}</p>
           </div>
         </div>
         <el-popover
@@ -38,7 +38,7 @@
           :route="{ name: 'admin-leaderboard' }"
           index="leaderboard"
         >
-          <i class="gs-icon--"></i>
+          <i class="gs-icon--list"></i>
           <span>Leaderboard</span>
         </el-menu-item>
         <el-menu-item :route="{ name: 'admin-categories' }" index="categories">
@@ -76,7 +76,16 @@ export default {
   name: 'AdminLayout',
   data() {
     return {
-      activeTab: ''
+      activeTab: '',
+      admin: this.$store.state.admin.admin
+    }
+  },
+  computed: {
+    name() {
+      return `${this.admin.firstname || ''} ${this.admin.lastname || ''}`
+    },
+    email() {
+      return this.admin.email || ''
     }
   },
   watch: {
@@ -93,9 +102,27 @@ export default {
       this.activeTab = value[1]
     }
   },
+  beforeRouteEnter(to, from, next) {
+    if (this.$store.getters.token !== '') {
+      next()
+    } else {
+      next({ name: 'admin-login' })
+    }
+  },
+  created() {
+    setTimeout(() => {
+      this.admin = this.$store.state.admin.admin
+    }, 500)
+  },
   methods: {
     logout() {
-      this.$router.push({ name: 'accounts-login' })
+      this.$store
+        .dispatch('admin/LOGOUT')
+        .then(() => {
+          this.$router.push({ name: 'admin-login' })
+          this.$message.success('You are logged out!')
+        })
+        .catch()
     }
   }
 }
@@ -162,6 +189,12 @@ $--sidebar-width: 20%;
           opacity: 1;
           transition: opacity 0.2s ease-out;
         }
+      }
+    }
+
+    .gs-user-details {
+      h6 {
+        font-size: 0.9rem;
       }
     }
     .gs-active-users {

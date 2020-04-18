@@ -1,6 +1,6 @@
 <template>
   <div class="gs-activities">
-    <el-form class="gs-filters" v-if="$route.name.split('-')[1] === 'users'">
+    <el-form v-if="$route.name.split('-')[1] === 'users'" class="gs-filters">
       <el-form-item class="gs-form-item--auth" label="" prop="search">
         <el-input
           v-model="searchQuery"

@@ -1,13 +1,22 @@
+import $axios from '../plugins/axios'
+
 export default {
+  async adminLogin(data) {
+    return await $axios.post('/admin/login', {
+      email: data.email,
+      password: data.password
+    })
+  },
+
   login(data) {
-    return this.$axios.post('/user/login', {
+    return $axios.post('/user/login', {
       email: data.email,
       password: data.password
     })
   },
 
   register(data) {
-    return this.$axios.post('/user/register', {
+    return $axios.post('/user/register', {
       name: data.name,
       email: data.email,
       phoneNumber: data.phoneNumber,
@@ -18,7 +27,7 @@ export default {
   },
 
   verify(token) {
-    return this.$axios.get(`/user/verify?token=${token}`)
+    return $axios.get(`/user/verify?token=${token}`)
   },
 
   sendVerificationMail(email) {

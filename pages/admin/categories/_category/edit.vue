@@ -1,12 +1,13 @@
 <template>
   <div>
     <template v-if="!viewStage">
-      <div class="mb-5">
-        <h3 class="gs-app-layout-heading">
-          ADD NEW CATEGORY
-        </h3>
+      <div class="mb-5 d-flex">
+        <div class="gs-back-arrow" @click="goBack">
+          <i class="gs-icon--arrow-left"></i>
+        </div>
+        <h3 class="gs-app-layout-heading">Update {{ category.name }}</h3>
       </div>
-      <el-row>
+      <el-row v-loading="fetchingCategory">
         <el-col :span="22">
           <el-form
             ref="updateForm"
@@ -14,6 +15,7 @@
             label-width="200px"
             label-position="top"
             class="gs-form"
+            :rules="rules"
           >
             <el-card class="mb-4">
               <el-row :gutter="20" type="flex" class="flex-wrap ">
@@ -27,8 +29,8 @@
                   <el-form-item
                     v-custom-input="category.name"
                     class="gs-form-item--auth"
-                    label="Category Title"
-                    prop="title"
+                    label="Category Name"
+                    prop="name"
                   >
                     <el-input
                       v-model="category.name"
@@ -68,30 +70,27 @@
                   </el-form-item>
                 </el-col>
               </el-row>
-              <el-form-item
-                v-if="!category.id"
-                class="d-flex justify-content-center mt-4"
-              >
+              <el-form-item class="d-flex justify-content-center mt-4">
                 <el-button
-                  :loading="addingCategory"
+                  :loading="updatingCategory"
                   type="primary"
                   class="px-5"
-                  @click="addCategory"
-                  >Add Category</el-button
+                  @click="updateCategory"
+                  >Update</el-button
                 >
               </el-form-item>
             </el-card>
-            <el-card v-if="category.id" class="gs-stages-card">
+            <el-card class="gs-stages-card">
               <template v-if="category.stages.length === 0">
                 <div
                   class="my-3 d-flex justify-content-center align-items-center"
                   :style="{ cursor: 'pointer' }"
-                  @click="addStage = true"
+                  @click="showAddStage = true"
                 >
                   <div class="gs-add-stage">
                     <i class="gs-icon--plus"></i>
                   </div>
-                  <p class="mb-0 ml-2">Add a stage to {{ category.name }}</p>
+                  <p class="mb-0 ml-2">Add New Stage</p>
                 </div>
               </template>
               <template v-else>
@@ -106,7 +105,7 @@
                         <h5 @click="showStage(stage)">{{ stage.name }}</h5>
                         <p>0 Questions</p>
                       </div>
-                      <div class="d-flex">
+                      <div class="gs-category-stage-action">
                         <el-button
                           type="primary"
                           icon="gs-icon--trash"
@@ -120,7 +119,7 @@
                     <div
                       class="h-100 d-flex justify-content-center align-items-center"
                     >
-                      <div class="gs-add-stage" @click="addStage = true">
+                      <div class="gs-add-stage" @click="showAddStage = true">
                         <i class="gs-icon--plus"></i>
                       </div>
                     </div>
@@ -133,9 +132,12 @@
       </el-row>
     </template>
     <template v-else>
-      <div class="mb-5">
+      <div class="d-flex mb-5">
+        <div class="gs-back-arrow" @click="hideStage">
+          <i class="gs-icon--arrow-left"></i>
+        </div>
         <h3 class="gs-app-layout-heading">
-          ADD NEW CATEGORY / STAGE
+          {{ category.name }} / {{ stageProperties.name }}
         </h3>
       </div>
       <view-stage
@@ -144,7 +146,7 @@
       ></view-stage>
     </template>
     <add-stage
-      :show.sync="addStage"
+      :show.sync="showAddStage"
       :category-id="category.id"
       :category-stages="category.stages"
     ></add-stage>
@@ -152,12 +154,12 @@
 </template>
 
 <script>
-import admin from '../../../controllers/admin'
+import admin from '~/controllers/admin'
 import ViewStage from '~/components/Stage/ViewStage'
 import AddStage from '~/components/Stage/AddStage'
 
 export default {
-  name: 'AdminCategories',
+  name: 'AdminCategoryEdit',
   layout: 'admin',
   components: {
     AddStage,
@@ -165,15 +167,33 @@ export default {
   },
   data() {
     return {
-      addStage: false,
-      addingCategory: false,
+      showAddStage: false,
+      fetchingCategory: false,
+      updatingCategory: false,
       activeStage: '0',
       category: {
-        id: '',
+        id: this.$route.params.id,
         status: false,
         name: '',
         price: '',
+        slug: '',
         stages: []
+      },
+      rules: {
+        name: [
+          {
+            required: true,
+            message: "Field can't be blank",
+            trigger: 'change'
+          }
+        ],
+        price: [
+          {
+            required: true,
+            message: "Field can't be blank",
+            trigger: 'change'
+          }
+        ]
       },
       loadingHeaders: false,
       showQuestions: false,
@@ -194,21 +214,79 @@ export default {
       this.fetchStages()
     }
   },
+  beforeRouteEnter(to, from, next) {
+    if (!to.params.id) {
+      next({ name: 'admin-categories' })
+    } else {
+      next()
+    }
+  },
+  created() {
+    this.fetchCategory()
+  },
   methods: {
-    addCategory() {
-      this.addingCategory = true
+    goBack() {
+      return window.history.length > 1
+        ? this.$router.go(-1)
+        : this.$router.push('/')
+    },
+    fetchCategory() {
+      this.fetchingCategory = true
       admin
-        .addCategory(this.category)
+        .getCategory(this.$route.params.id)
         .then((response) => {
-          if (!response.data.error) {
-            this.category.id = response.data.response.data._id
-            this.$message.success(response.data.message)
+          const res = response.data
+          if (!res.error) {
+            this.category.id = res.response.data._id
+            this.category.name = res.response.data.name
+            this.category.slug = res.response.data.slug
+            this.category.price = res.response.data.price
+            this.fetchStages()
           }
-          this.addingCategory = false
         })
         .catch((error) => {
           this.$message.error(error.response.data.response.error)
-          this.addingCategory = false
+          this.fetchingCategory = false
+        })
+    },
+    updateCategory() {
+      this.$refs.updateForm.validate((valid) => {
+        if (valid) {
+          this.updatingCategory = true
+          admin
+            .updateCategory(this.category)
+            .then((response) => {
+              const res = response.data
+              console.log(res)
+              if (!res.error) {
+                this.updatingCategory = false
+                this.$message.success(res.message)
+              }
+            })
+            .catch((error) => {
+              this.updatingCategory = false
+              if (error.response.status === 500) {
+                this.$message.error('Unable to update now, please try later.')
+              }
+            })
+        } else {
+          return false
+        }
+      })
+    },
+    fetchStages() {
+      admin
+        .getStages(this.category.id)
+        .then((response) => {
+          const res = response.data
+          if (!res.error) {
+            this.category.stages = res.response.data
+            this.fetchingCategory = false
+          }
+        })
+        .catch((error) => {
+          this.$message.error(error.response.data.response.error)
+          this.fetchingCategory = false
         })
     },
     deleteStage(id) {
@@ -249,6 +327,10 @@ export default {
     showStage(stage) {
       this.stageProperties = stage
       this.viewStage = true
+    },
+    hideStage() {
+      this.fetchStages()
+      this.viewStage = false
     }
   }
 }
@@ -349,6 +431,15 @@ export default {
       color: #4d00d2;
       transition: all 0.2s ease-in;
     }
+  }
+}
+
+.gs-back-arrow {
+  margin-right: 10px;
+  cursor: pointer;
+  i {
+    font-weight: 400;
+    margin-bottom: 0;
   }
 }
 

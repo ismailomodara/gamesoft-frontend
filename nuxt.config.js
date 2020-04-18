@@ -38,7 +38,9 @@ export default {
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/directives',
-    { src: '@/plugins/vue-csv-import', ssr: false }
+    '@/plugins/dates',
+    { src: '@/plugins/vue-csv-import', ssr: false },
+    { src: '@/plugins/local-storage', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -50,16 +52,9 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
-  ],
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
+  modules: ['@nuxtjs/axios'],
   axios: {
-    baseURL: 'https://api.gamesoft.com/'
+    setBaseURL: 'https://gamesoft-revised.herokuapp.com/'
   },
   /*
    ** Build configuration

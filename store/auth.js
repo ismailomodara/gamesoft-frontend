@@ -1,12 +1,15 @@
+import Cookies from 'js-cookie'
 import auth from '../controllers/auth'
 
 export const state = () => ({
-  token: '',
-  authenticated: true,
+  token: Cookies.get('gamesoft-token') || null,
+  authenticated: false,
+  admin: '',
   user: ''
 })
 
 export const getters = {
+  admin: (state) => state.admin,
   user: (state) => state.user,
   authenticated: (state) => state.authenticated
 }
@@ -20,6 +23,9 @@ export const mutations = {
   },
   USER(state, user) {
     state.user = user
+  },
+  ADMIN(state, admin) {
+    state.admin = admin
   }
 }
 

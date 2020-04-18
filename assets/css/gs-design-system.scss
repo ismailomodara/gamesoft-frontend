@@ -55,6 +55,10 @@
   }
 }
 
+.el-input.is-disabled .el-input__inner {
+  background-color: transparent !important;
+}
+
 .gs-filters {
   display: flex;
   align-items: center;
@@ -173,7 +177,7 @@
 
 /* ===== DIALOG ====== */
 .el-dialog__wrapper.large .el-dialog {
-  height: 85vh;
+  height: 70vh;
 }
 
 .el-dialog {

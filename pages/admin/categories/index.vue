@@ -8,7 +8,7 @@
         <el-button type="primary" plain>Add New</el-button>
       </nuxt-link>
     </div>
-    <div class="gs-all-categories">
+    <div class="gs-all-categories" :loading="gettingCategories">
       <el-form class="gs-filters">
         <el-dropdown @command="filterBy">
           <el-button plain
@@ -23,30 +23,47 @@
         <el-form-item class="gs-form-item--auth" label="" prop="search">
           <el-input
             v-model="searchQuery"
-            type="text"
             suffix-icon="gs-icon--search"
+            type="text"
             placeholder="Search category"
+            @change="filterWithQuery"
           ></el-input>
         </el-form-item>
       </el-form>
       <el-table :data="allCategoriesFiltered" style="width: 100%">
         <el-table-column label="" width="30"> </el-table-column>
-        <el-table-column prop="title" label="Title"> </el-table-column>
-        <el-table-column prop="stages" label="Stages"> </el-table-column>
-        <el-table-column prop="total_questions" label="Questions">
+        <el-table-column prop="name" label="Name">
+          <template slot-scope="scope">
+            <nuxt-link
+              :to="{
+                name: 'admin-categories-category-edit',
+                meta: { id: 'sush' },
+                params: { category: scope.row.slug, id: scope.row._id }
+              }"
+              >{{ scope.row.name }}</nuxt-link
+            >
+          </template>
         </el-table-column>
-        <el-table-column prop="total_points" label="Points"> </el-table-column>
-        <el-table-column prop="reward" label="Reward"> </el-table-column>
-        <el-table-column prop="created" label="Created on"> </el-table-column>
+        <el-table-column prop="price" label="Price"> </el-table-column>
+        <el-table-column prop="slug" label="Slug"></el-table-column>
+        <el-table-column prop="created" label="Created on">
+          <template slot-scope="scope">
+            {{ fullDate(scope.row.createdAt) }}
+          </template>
+        </el-table-column>
         <el-table-column label="Actions">
           <template slot-scope="scope">
-            <el-button size="mini" @click="editCategory(scope.row.id)"
-              >Edit</el-button
+            <nuxt-link
+              :to="{
+                name: 'admin-categories-category-edit',
+                params: { category: scope.row.slug, id: scope.row._id }
+              }"
+              ><el-button size="mini">Edit</el-button></nuxt-link
             >
             <el-button
               size="mini"
               type="danger"
-              @click="deleteCategory(scope.row.id)"
+              @click="deleteCategory(scope.row.name, scope.row._id)"
               >Delete</el-button
             >
           </template>
@@ -57,6 +74,8 @@
 </template>
 
 <script>
+import admin from '../../../controllers/admin'
+
 export default {
   name: 'AdminCategories',
   layout: 'admin',
@@ -70,76 +89,88 @@ export default {
   },
   data() {
     return {
+      gettingCategories: true,
       searchQuery: '',
-      allCategories: [
-        {
-          id: 1,
-          title: 'Music',
-          stages: 3,
-          total_questions: 80,
-          total_points: 400,
-          reward: '$15.00',
-          created: '4th April, 2020',
-          status: 'active'
-        },
-        {
-          id: 2,
-          title: 'Sports',
-          stages: 4,
-          total_questions: 60,
-          total_points: 200,
-          reward: '$15.00',
-          created: '4th April, 2020',
-          status: 'active'
-        },
-        {
-          id: 3,
-          title: 'IQ Basic',
-          stages: 3,
-          total_questions: 70,
-          total_points: 300,
-          reward: '$15.00',
-          created: '4th April, 2020',
-          status: 'active'
-        },
-        {
-          id: 4,
-          title: 'Health',
-          stages: 3,
-          total_questions: 70,
-          total_points: 300,
-          reward: '$15.00',
-          created: '4th April, 2020',
-          status: 'inactive'
-        }
-      ]
+      allCategories: this.$store.state.admin.categories || []
     }
   },
   computed: {
-    allCategoriesFiltered() {
-      return this.filterWithQuery()
+    allCategoriesFiltered: {
+      get() {
+        return this.allCategories
+      },
+      set(value) {
+        this.$emit('update:allCategories', value)
+      }
     }
+  },
+  created() {
+    this.getAllCategories()
   },
   methods: {
     filterWithQuery(query = this.searchQuery) {
-      return this.allCategories.filter(
+      console.log(this.searchQuery)
+      this.allCategories = this.allCategories.filter(
         (data) =>
           !query ||
-          data.title.toLowerCase().includes(query.toLowerCase()) ||
-          data.stages.toString().includes(query) ||
-          data.total_questions.toString().includes(query) ||
-          data.total_points.toString().includes(query) ||
-          data.status.toLowerCase().includes(query.toLowerCase())
+          data.name.toLowerCase().includes(query.toLowerCase()) ||
+          data.price.toString().includes(query)
       )
     },
     filterBy(command) {
       this.filterWithQuery(command)
     },
-    editCategory(id) {
-      //
+    getAllCategories() {
+      this.gettingCategories = true
+      this.$store
+        .dispatch('admin/ALL_CATEGORIES')
+        .then(() => {
+          this.allCategories = this.$store.state.admin.categories
+          this.gettingCategories = false
+        })
+        .catch((error) => {
+          this.$message.error(error.response)
+          this.gettingCategories = false
+        })
     },
-    deleteCategory(id) {
-      //
+    deleteCategory(name, id) {
+      this.$confirm(
+        `Are you sure you want to delete this category, ${name}?`,
+        'Warning',
+        {
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel',
+          type: 'warning',
+          beforeClose: (action, instance, done) => {
+            if (action === 'confirm') {
+              instance.confirmButtonLoading = true
+              instance.confirmButtonText = 'Deleting...'
+
+              setTimeout(() => {
+                done()
+                setTimeout(() => {
+                  instance.confirmButtonLoading = false
+                }, 300)
+              }, 1500)
+            } else {
+              done()
+            }
+          }
+        }
+      ).then(() => {
+        admin
+          .deleteCategory(id)
+          .then((response) => {
+            const res = response.data
+            if (!res.error) {
+              this.getAllCategories()
+              this.$message.success(res.message)
+            }
+          })
+          .catch((error) => {
+            this.$message.error(error.response.data.message)
+          })
+      })
     }
   }
 }
@@ -157,8 +188,8 @@ export default {
   }
 
   a {
-    font-weight: 600;
-    font-size: 12px;
+    font-weight: 400;
+    font-size: 14px;
   }
 }
 

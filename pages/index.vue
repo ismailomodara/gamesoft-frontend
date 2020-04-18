@@ -1,13 +1,15 @@
 <template>
   <div class="container">
     <div>
-      <logo />
       <h1 class="title">
         Gamesoft
       </h1>
       <div class="links">
-        <nuxt-link :to="{ name: 'accounts-login' }">
-          <el-button type="primary">Login</el-button>
+        <!--        <nuxt-link :to="{ name: 'accounts-login' }">-->
+        <!--          <el-button type="primary">User</el-button>-->
+        <!--        </nuxt-link>-->
+        <nuxt-link :to="{ name: 'admin-login' }">
+          <el-button type="primary">Admin</el-button>
         </nuxt-link>
       </div>
     </div>
@@ -20,7 +22,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .container {
   margin: 0 auto;
   min-height: 100vh;
@@ -50,5 +52,7 @@ export default {
 
 .links {
   padding-top: 15px;
+  display: flex;
+  justify-content: center;
 }
 </style>
