@@ -214,13 +214,6 @@ export default {
       this.fetchStages()
     }
   },
-  beforeRouteEnter(to, from, next) {
-    if (!to.params.id) {
-      next({ name: 'admin-categories' })
-    } else {
-      next()
-    }
-  },
   created() {
     this.fetchCategory()
   },

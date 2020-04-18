@@ -26,7 +26,7 @@
             suffix-icon="gs-icon--search"
             type="text"
             placeholder="Search category"
-            @change="filterWithQuery"
+            @input="filterWithQuery"
           ></el-input>
         </el-form-item>
       </el-form>
@@ -37,7 +37,6 @@
             <nuxt-link
               :to="{
                 name: 'admin-categories-category-edit',
-                meta: { id: 'sush' },
                 params: { category: scope.row.slug, id: scope.row._id }
               }"
               >{{ scope.row.name }}</nuxt-link
@@ -91,17 +90,12 @@ export default {
     return {
       gettingCategories: true,
       searchQuery: '',
-      allCategories: this.$store.state.admin.categories || []
+      allCategoriesFiltered: this.$store.state.admin.categories
     }
   },
   computed: {
-    allCategoriesFiltered: {
-      get() {
-        return this.allCategories
-      },
-      set(value) {
-        this.$emit('update:allCategories', value)
-      }
+    allCategories() {
+      return this.$store.state.admin.categories
     }
   },
   created() {
@@ -109,8 +103,7 @@ export default {
   },
   methods: {
     filterWithQuery(query = this.searchQuery) {
-      console.log(this.searchQuery)
-      this.allCategories = this.allCategories.filter(
+      this.allCategoriesFiltered = this.allCategories.filter(
         (data) =>
           !query ||
           data.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -125,7 +118,6 @@ export default {
       this.$store
         .dispatch('admin/ALL_CATEGORIES')
         .then(() => {
-          this.allCategories = this.$store.state.admin.categories
           this.gettingCategories = false
         })
         .catch((error) => {

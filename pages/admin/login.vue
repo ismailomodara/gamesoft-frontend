@@ -85,8 +85,8 @@ export default {
       errorMessage: '',
       passwordFieldType: 'password',
       form: {
-        email: 'admin@gmail.com',
-        password: 'ifconfig'
+        email: '',
+        password: ''
       },
       rememberMe: '',
       rules: {

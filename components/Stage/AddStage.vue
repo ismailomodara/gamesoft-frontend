@@ -265,11 +265,14 @@ export default {
             this.$message.success(res.message)
             this.addingStage = false
             this.shouldShow = false
+            this.stage.prevStageId = ''
+            this.$refs.stageForm.resetFields()
           }
         })
         .catch((error) => {
           this.$message.error(error.response.data.response.errors.categoryId)
           this.addingStage = false
+          this.shouldShow = false
         })
     }
   }

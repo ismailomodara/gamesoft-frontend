@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="!viewStage">
+    <template>
       <div class="mb-5">
         <h3 class="gs-app-layout-heading">
           ADD NEW CATEGORY
@@ -81,104 +81,29 @@
                 >
               </el-form-item>
             </el-card>
-            <el-card v-if="category.id" class="gs-stages-card">
-              <template v-if="category.stages.length === 0">
-                <div
-                  class="my-3 d-flex justify-content-center align-items-center"
-                  :style="{ cursor: 'pointer' }"
-                  @click="addStage = true"
-                >
-                  <div class="gs-add-stage">
-                    <i class="gs-icon--plus"></i>
-                  </div>
-                  <p class="mb-0 ml-2">Add a stage to {{ category.name }}</p>
-                </div>
-              </template>
-              <template v-else>
-                <el-row type="flex" class="flex-wrap" :gutter="30">
-                  <el-col
-                    v-for="(stage, index) in category.stages"
-                    :key="index"
-                    :lg="8"
-                  >
-                    <div class="gs-category-stage">
-                      <div>
-                        <h5 @click="showStage(stage)">{{ stage.name }}</h5>
-                        <p>0 Questions</p>
-                      </div>
-                      <div class="d-flex">
-                        <el-button
-                          type="primary"
-                          icon="gs-icon--trash"
-                          circle
-                          @click="deleteStage(stage._id)"
-                        ></el-button>
-                      </div>
-                    </div>
-                  </el-col>
-                  <el-col :lg="2">
-                    <div
-                      class="h-100 d-flex justify-content-center align-items-center"
-                    >
-                      <div class="gs-add-stage" @click="addStage = true">
-                        <i class="gs-icon--plus"></i>
-                      </div>
-                    </div>
-                  </el-col>
-                </el-row>
-              </template>
-            </el-card>
           </el-form>
         </el-col>
       </el-row>
     </template>
-    <template v-else>
-      <div class="mb-5">
-        <h3 class="gs-app-layout-heading">
-          ADD NEW CATEGORY / STAGE
-        </h3>
-      </div>
-      <view-stage
-        :show.sync="viewStage"
-        :stage-properties="stageProperties"
-      ></view-stage>
-    </template>
-    <add-stage
-      :show.sync="addStage"
-      :category-id="category.id"
-      :category-stages="category.stages"
-    ></add-stage>
   </div>
 </template>
 
 <script>
 import admin from '../../../controllers/admin'
-import ViewStage from '~/components/Stage/ViewStage'
-import AddStage from '~/components/Stage/AddStage'
 
 export default {
   name: 'AdminCategories',
   layout: 'admin',
-  components: {
-    AddStage,
-    ViewStage
-  },
+  components: {},
   data() {
     return {
-      addStage: false,
       addingCategory: false,
-      activeStage: '0',
       category: {
         id: '',
         status: false,
         name: '',
-        price: '',
-        stages: []
-      },
-      loadingHeaders: false,
-      showQuestions: false,
-      viewStage: false,
-      stageProperties: {}
+        price: ''
+      }
     }
   },
   computed: {
@@ -189,66 +114,32 @@ export default {
         .join('-')
     }
   },
-  watch: {
-    showAddStage() {
-      this.fetchStages()
-    }
-  },
   methods: {
     addCategory() {
       this.addingCategory = true
       admin
         .addCategory(this.category)
         .then((response) => {
-          if (!response.data.error) {
-            this.category.id = response.data.response.data._id
-            this.$message.success(response.data.message)
+          const res = response.data
+          if (!res.error) {
+            this.category.id = res.response.data._id
+            this.$message.success(res.message)
+            setTimeout(() => {
+              this.$router.push({
+                name: 'admin-categories-category-edit',
+                params: {
+                  category: res.response.data.slug,
+                  id: this.category.id
+                }
+              })
+            }, 500)
           }
           this.addingCategory = false
         })
         .catch((error) => {
-          this.$message.error(error.response.data.response.error)
+          this.$message.error(error.response.data.response.error.category)
           this.addingCategory = false
         })
-    },
-    deleteStage(id) {
-      this.$confirm("This can't be undone, Proceed?", 'Warning', {
-        confirmButtonText: 'Proceed',
-        cancelButtonText: 'Cancel',
-        type: 'warning',
-        beforeClose: (action, instance, done) => {
-          if (action === 'confirm') {
-            instance.confirmButtonLoading = true
-            instance.confirmButtonText = 'Deleting...'
-
-            setTimeout(() => {
-              done()
-              setTimeout(() => {
-                instance.confirmButtonLoading = false
-              }, 300)
-            }, 1500)
-          } else {
-            done()
-          }
-        }
-      }).then(() => {
-        admin
-          .deleteStage(id)
-          .then((response) => {
-            const res = response.data
-            if (!res.error) {
-              this.fetchStages()
-              this.$message.success(res.message)
-            }
-          })
-          .catch((error) => {
-            this.$message.error(error.response.data.message)
-          })
-      })
-    },
-    showStage(stage) {
-      this.stageProperties = stage
-      this.viewStage = true
     }
   }
 }
