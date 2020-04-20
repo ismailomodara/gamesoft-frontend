@@ -10,7 +10,7 @@
           <el-alert
             v-if="loginError"
             class="mb-3"
-            title="Invalid email/password"
+            :title="errorMessage"
             type="error"
           >
           </el-alert>
@@ -102,10 +102,11 @@ export default {
       logo: '/logo.svg',
       loggingIn: false,
       loginError: false,
+      errorMessage: '',
       passwordFieldType: 'password',
       form: {
-        email: '',
-        password: ''
+        email: 'gamesoft-test@mailinator.com',
+        password: 'sinzufunds'
       },
       rememberMe: '',
       rules: {
@@ -148,28 +149,20 @@ export default {
       this.loggingIn = true
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          if (
-            this.form.email === 'moshood@alaran.com' ||
-            this.form.password === 'moshood'
-          ) {
-            setTimeout(() => {
-              this.$router.push({ name: 'app-dashboard' })
-              this.$message.success('Login successful')
+          this.$store
+            .dispatch('auth/LOGIN', this.form)
+            .then((response) => {
+              if (!response.error) {
+                this.$message.success(response.message)
+                this.$router.push({ name: 'app-dashboard' })
+              }
               this.loggingIn = false
-            }, 2000)
-          } else if (
-            this.form.email === 'admin@admin.com' ||
-            this.form.password === 'admin'
-          ) {
-            setTimeout(() => {
-              this.$router.push({ name: 'admin-overview' })
-              this.$message.success('Login successful')
+            })
+            .catch((error) => {
+              this.errorMessage = error.response.data.response.errors.email
+              this.loginError = true
               this.loggingIn = false
-            }, 2000)
-          } else {
-            this.loginError = true
-            this.loggingIn = false
-          }
+            })
         } else {
           this.loggingIn = false
           return false

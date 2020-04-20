@@ -7,8 +7,8 @@
             <img src="@/assets/img/mosh.jpeg" alt />
           </div>
           <div class="gs-user-details">
-            <h6>Moshood Alaran</h6>
-            <p>moshood@alaran.com</p>
+            <h6>{{ name }}</h6>
+            <p>{{ email }}</p>
           </div>
         </div>
         <el-popover
@@ -72,7 +72,16 @@ export default {
   name: 'AppLayout',
   data() {
     return {
-      activeTab: ''
+      activeTab: '',
+      user: this.$store.state.auth.user
+    }
+  },
+  computed: {
+    name() {
+      return `${this.user.firstname || ''} ${this.user.lastname || ''}`
+    },
+    email() {
+      return this.user.email || ''
     }
   },
   watch: {
@@ -91,7 +100,13 @@ export default {
   },
   methods: {
     logout() {
-      this.$router.push({ name: 'accounts-login' })
+      this.$store
+        .dispatch('auth/LOGOUT')
+        .then(() => {
+          this.$router.push({ name: 'accounts-login' })
+          this.$message.success('You are logged out!')
+        })
+        .catch()
     }
   }
 }

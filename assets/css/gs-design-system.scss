@@ -95,6 +95,10 @@
   transition: all 0.2s ease-in;
 }
 
+.el-button--primary {
+  border: none !important;
+}
+
 .el-button:not(.el-button--text):not(.el-button--mini):not(.el-button--small):focus,
 .el-button:not(.el-button--text):not(.el-button--mini):not(.el-button--small):hover {
   outline: none;

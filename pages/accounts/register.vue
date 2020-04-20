@@ -80,6 +80,7 @@
               <el-col :xs="24" :sm="12">
                 <el-form-item
                   v-custom-input="form.phoneNumber"
+                  v-only-number
                   class="gs-form-item--auth"
                   label="Phone Number"
                   prop="phoneNumber"
@@ -100,8 +101,9 @@
                 >
                   <el-input
                     v-model="form.password"
-                    type="password"
+                    :type="passwordFieldType"
                     auto-complete="off"
+                    @keyup.native.enter="register"
                   >
                     <i
                       slot="suffix"
@@ -143,6 +145,8 @@
 </template>
 
 <script>
+import auth from '~/controllers/auth'
+
 export default {
   name: 'Login',
   data() {
@@ -219,9 +223,19 @@ export default {
       this.registering = true
       this.$refs.registerForm.validate((valid) => {
         if (valid) {
-          this.$store.dispatch('auth/REGISTER', this.form).then(() => {
-            this.registering = false
-          })
+          auth
+            .register(this.form)
+            .then((response) => {
+              const res = response.data
+              if (!res.error) {
+                this.$message.success('Account successfully created.')
+              }
+              this.registering = false
+            })
+            .catch((error) => {
+              this.$message.error(error.response.data.message)
+              this.registering = false
+            })
         } else {
           this.registering = false
           return false

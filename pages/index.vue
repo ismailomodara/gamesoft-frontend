@@ -5,11 +5,11 @@
         Gamesoft
       </h1>
       <div class="links">
-        <!--        <nuxt-link :to="{ name: 'accounts-login' }">-->
-        <!--          <el-button type="primary">User</el-button>-->
-        <!--        </nuxt-link>-->
         <nuxt-link :to="{ name: 'admin-login' }">
           <el-button type="primary">Admin</el-button>
+        </nuxt-link>
+        <nuxt-link :to="{ name: 'accounts-login' }">
+          <el-button type="secondary">User</el-button>
         </nuxt-link>
       </div>
     </div>
@@ -54,5 +54,9 @@ export default {
   padding-top: 15px;
   display: flex;
   justify-content: center;
+
+  a:not(:last-child) {
+    margin-right: 10px;
+  }
 }
 </style>

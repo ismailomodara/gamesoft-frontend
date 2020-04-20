@@ -44,6 +44,7 @@
                 v-model="form.password"
                 :type="passwordFieldType"
                 auto-complete="off"
+                @keyup.native.enter="login"
               >
                 <i
                   slot="suffix"
@@ -139,8 +140,7 @@ export default {
               this.loggingIn = false
             })
             .catch((error) => {
-              console.log(error.response)
-              // this.errorMessage = error.response.data.response.errors.email
+              this.errorMessage = error.response.data.response.errors.email
               this.loginError = true
               this.loggingIn = false
             })

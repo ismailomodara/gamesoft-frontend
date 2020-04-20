@@ -78,24 +78,21 @@ import admin from '../../../controllers/admin'
 export default {
   name: 'AdminCategories',
   layout: 'admin',
-  props: {
-    recentActivities: {
-      type: Array,
-      default() {
-        return []
-      }
-    }
-  },
   data() {
     return {
       gettingCategories: true,
       searchQuery: '',
-      allCategoriesFiltered: this.$store.state.admin.categories
+      allCategories: this.$store.state.admin.categories || []
     }
   },
   computed: {
-    allCategories() {
-      return this.$store.state.admin.categories
+    allCategoriesFiltered: {
+      get() {
+        return this.allCategories
+      },
+      set(value) {
+        this.$emit('update:allCategories', value)
+      }
     }
   },
   created() {
@@ -103,12 +100,17 @@ export default {
   },
   methods: {
     filterWithQuery(query = this.searchQuery) {
-      this.allCategoriesFiltered = this.allCategories.filter(
-        (data) =>
-          !query ||
-          data.name.toLowerCase().includes(query.toLowerCase()) ||
-          data.price.toString().includes(query)
-      )
+      const categories = this.$store.state.admin.categories
+      if (query !== '') {
+        this.allCategories = categories.filter(
+          (data) =>
+            !query ||
+            data.name.toLowerCase().includes(query.toLowerCase()) ||
+            data.price.toString().includes(query)
+        )
+      } else {
+        this.allCategories = categories
+      }
     },
     filterBy(command) {
       this.filterWithQuery(command)
@@ -117,8 +119,9 @@ export default {
       this.gettingCategories = true
       this.$store
         .dispatch('admin/ALL_CATEGORIES')
-        .then(() => {
+        .then((response) => {
           this.gettingCategories = false
+          this.allCategories = this.$store.state.admin.categories
         })
         .catch((error) => {
           this.$message.error(error.response)
