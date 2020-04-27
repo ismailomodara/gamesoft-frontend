@@ -34,7 +34,6 @@ export const actions = {
         .then((response) => {
           const res = response.data.response
           const token = response.headers['x-auth-token']
-          console.log(res)
           if (!res.error) {
             $axios.defaults.headers.common['x-auth-token'] = token
             commit('USER', res.data)

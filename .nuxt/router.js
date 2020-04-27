@@ -6,6 +6,7 @@ import scrollBehavior from './router.scrollBehavior.js'
 const _128fea0c = () => interopDefault(import('../pages/accounts/forgot-password.vue' /* webpackChunkName: "pages/accounts/forgot-password" */))
 const _f3e312c4 = () => interopDefault(import('../pages/accounts/login.vue' /* webpackChunkName: "pages/accounts/login" */))
 const _0b6eb57e = () => interopDefault(import('../pages/accounts/register.vue' /* webpackChunkName: "pages/accounts/register" */))
+const _68f8c914 = () => interopDefault(import('../pages/accounts/verify.vue' /* webpackChunkName: "pages/accounts/verify" */))
 const _38209a06 = () => interopDefault(import('../pages/admin/categories/index.vue' /* webpackChunkName: "pages/admin/categories/index" */))
 const _b88491e2 = () => interopDefault(import('../pages/admin/leaderboard.vue' /* webpackChunkName: "pages/admin/leaderboard" */))
 const _e625e70a = () => interopDefault(import('../pages/admin/login.vue' /* webpackChunkName: "pages/admin/login" */))
@@ -54,6 +55,10 @@ export const routerOptions = {
     path: "/accounts/register",
     component: _0b6eb57e,
     name: "accounts-register"
+  }, {
+    path: "/accounts/verify",
+    component: _68f8c914,
+    name: "accounts-verify"
   }, {
     path: "/admin/categories",
     component: _38209a06,

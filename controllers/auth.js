@@ -17,5 +17,11 @@ export default {
       password: data.password,
       username: data.userName
     })
+  },
+
+  verify(email) {
+    return $axios.post('/user/send_verification', {
+      email
+    })
   }
 }
