@@ -242,19 +242,48 @@ a, a:hover {
 }
 
 .gs-filters {
-  .el-form-item__label {
-    opacity: 0.5;
-    font-size: 14px;
-  }
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0;
 
-  .el-input__inner {
+  .el-input {
     padding-top: 0;
     height: auto;
+    width: 300px;
   }
 
   i {
     top: 5px;
     font-size: 16px;
+  }
+
+  .el-button {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    height: 45px !important;
+
+    i {
+      margin-left: 5px;
+      font-size: 12px;
+    }
+
+    &:hover {
+      border-color: #7f828b;
+      color: #7f828b;
+      transform: translateY(0) !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .gs-filters {
+    justify-content: center;
+
+    .el-button {
+      display: none;
+    }
   }
 }
 

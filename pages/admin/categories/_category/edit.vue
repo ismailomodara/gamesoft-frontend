@@ -172,7 +172,7 @@ export default {
       updatingCategory: false,
       activeStage: '0',
       category: {
-        id: this.$route.params.id,
+        id: this.$route.params.category,
         status: false,
         name: '',
         price: '',
@@ -226,7 +226,7 @@ export default {
     fetchCategory() {
       this.fetchingCategory = true
       admin
-        .getCategory(this.$route.params.id)
+        .getCategory(this.$route.params.category)
         .then((response) => {
           const res = response.data
           if (!res.error) {

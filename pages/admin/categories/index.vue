@@ -8,10 +8,10 @@
         <el-button type="primary" plain>Add New</el-button>
       </nuxt-link>
     </div>
-    <div class="gs-all-categories" :loading="gettingCategories">
-      <el-form class="gs-filters">
+    <el-card>
+      <div class="gs-filters">
         <el-dropdown @command="filterBy">
-          <el-button plain
+          <el-button plain size="medium"
             >Filter by<i class="gs-icon--chevron-down"></i
           ></el-button>
           <el-dropdown-menu slot="dropdown">
@@ -20,24 +20,23 @@
             <el-dropdown-item command="inactive">Inactive</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-form-item class="gs-form-item--auth" label="" prop="search">
-          <el-input
-            v-model="searchQuery"
-            suffix-icon="gs-icon--search"
-            type="text"
-            placeholder="Search category"
-            @input="filterWithQuery"
-          ></el-input>
-        </el-form-item>
-      </el-form>
-      <el-table :data="allCategoriesFiltered" style="width: 100%">
+        <el-input
+          v-model="searchQuery"
+          suffix-icon="gs-icon--search"
+          type="text"
+          placeholder="Search category"
+          :disabled="!allCategoriesFiltered.length"
+          @input="filterWithQuery"
+        ></el-input>
+      </div>
+      <el-table v-loading="gettingCategories" :data="allCategoriesFiltered">
         <el-table-column label="" width="30"> </el-table-column>
         <el-table-column prop="name" label="Name">
           <template slot-scope="scope">
             <nuxt-link
               :to="{
                 name: 'admin-categories-category-edit',
-                params: { category: scope.row.slug, id: scope.row._id }
+                params: { category: scope.row._id }
               }"
               >{{ scope.row.name }}</nuxt-link
             >
@@ -55,7 +54,7 @@
             <nuxt-link
               :to="{
                 name: 'admin-categories-category-edit',
-                params: { category: scope.row.slug, id: scope.row._id }
+                params: { category: scope.row._id }
               }"
               ><el-button size="mini">Edit</el-button></nuxt-link
             >
@@ -68,7 +67,7 @@
           </template>
         </el-table-column>
       </el-table>
-    </div>
+    </el-card>
   </div>
 </template>
 
@@ -80,7 +79,7 @@ export default {
   layout: 'admin',
   data() {
     return {
-      gettingCategories: true,
+      gettingCategories: false,
       searchQuery: '',
       allCategories: this.$store.state.admin.categories || []
     }
@@ -96,7 +95,9 @@ export default {
     }
   },
   created() {
-    this.getAllCategories()
+    if (!this.$store.state.admin.categories.length) {
+      this.getAllCategories()
+    }
   },
   methods: {
     filterWithQuery(query = this.searchQuery) {
@@ -119,7 +120,7 @@ export default {
       this.gettingCategories = true
       this.$store
         .dispatch('admin/ALL_CATEGORIES')
-        .then((response) => {
+        .then(() => {
           this.gettingCategories = false
           this.allCategories = this.$store.state.admin.categories
         })
@@ -185,36 +186,6 @@ export default {
   a {
     font-weight: 400;
     font-size: 14px;
-  }
-}
-
-.gs-filters {
-  display: flex;
-  justify-content: flex-end;
-  margin: 20px 0;
-
-  .el-form-item {
-    margin-bottom: 0;
-    height: auto !important;
-    width: 300px;
-  }
-
-  .el-button {
-    margin-right: 10px;
-    display: flex;
-    align-items: center;
-
-    i {
-      margin-left: 5px;
-      font-size: 12px;
-    }
-
-    &:hover {
-      border-color: #7f828b;
-      color: #7f828b;
-      transform: translateY(0) !important;
-      box-shadow: none !important;
-    }
   }
 }
 </style>
