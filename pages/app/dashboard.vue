@@ -3,14 +3,20 @@
     <div class="gs-app-section-spacing">
       <h3 class="gs-app-layout-heading">Categories</h3>
       <el-row type="flex" :gutter="40" class="flex-wrap">
-        <el-col v-for="category in categories" :key="category.id" :lg="8">
+        <el-col
+          v-for="category in categories"
+          :key="category.id"
+          :sm="12"
+          :md="8"
+          :lg="8"
+        >
           <category-item :category="category"></category-item>
         </el-col>
       </el-row>
     </div>
     <div class="gs-app-section-spacing">
       <el-row type="flex" :gutter="40" class="flex-wrap">
-        <el-col :lg="8">
+        <el-col :span="24">
           <h3 class="gs-app-layout-heading">Credit</h3>
           <div class="gs-credits">
             <div class="gs-credit">
@@ -83,9 +89,13 @@ export default {
 <style lang="scss" scoped>
 .gs-credits {
   height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
   .gs-credit {
     background: #fff;
+    width: calc(33.33% - 20px);
     height: 120px;
     border-radius: 10px;
     display: flex;

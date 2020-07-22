@@ -153,7 +153,6 @@ export default {
             .dispatch('auth/LOGIN', this.form)
             .then((response) => {
               if (!response.error) {
-                console.log(response)
                 if (!response.response.data.isActivated) {
                   this.$router.push({ name: 'app-dashboard' })
                 } else {
@@ -161,6 +160,7 @@ export default {
                     name: 'accounts-verify',
                     params: { email: response.response.data.email }
                   })
+                  this.$store.dispatch('auth/LOGOUT').then()
                 }
               }
               this.loggingIn = false

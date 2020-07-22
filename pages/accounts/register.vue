@@ -124,7 +124,7 @@
                 :loading="registering"
                 type="primary"
                 class="px-5"
-                @click="dummyRegister"
+                @click="register"
                 >Register</el-button
               >
             </el-form-item>
@@ -219,12 +219,6 @@ export default {
       this.passwordFieldType =
         this.passwordFieldType === 'password' ? 'text' : 'password'
     },
-    dummyRegister() {
-      this.$router.push({
-        name: 'accounts-verify',
-        params: { email: this.form.email }
-      })
-    },
     register() {
       this.registering = true
       this.$refs.registerForm.validate((valid) => {
@@ -234,6 +228,7 @@ export default {
             .then((response) => {
               const res = response.data
               if (!res.error) {
+                this.$store.commit('auth/NEW_USER_EMAIL', this.form.email)
                 this.$message.success('Account successfully created.')
                 this.$router.push({ name: 'accounts-verify' })
               }

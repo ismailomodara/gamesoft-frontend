@@ -1,10 +1,10 @@
 <template>
   <el-row>
-    <el-col :lg="12">
+    <el-col :sm="12" :md="8" :lg="8">
       <el-card>
         <el-form
-          ref="updateForm"
-          :model="updateForm"
+          ref="updatePassword"
+          :model="form"
           :rules="rules"
           label-width="200px"
           label-position="top"
@@ -12,36 +12,36 @@
         >
           <div class="mb-4">
             <el-form-item
-              v-custom-input="updateForm.currentPassword"
+              v-custom-input="form.oldPassword"
               class="gs-form-item--auth"
               label="Current Password"
-              prop="currentPassword"
+              prop="oldPassword"
             >
               <el-input
-                v-model="updateForm.currentPassword"
-                :type="currentPasswordFieldType"
+                v-model="form.oldPassword"
+                :type="oldPasswordFieldType"
                 auto-complete="off"
               >
                 <i
                   slot="suffix"
                   :class="
-                    currentPasswordFieldType === 'password'
+                    oldPasswordFieldType === 'password'
                       ? 'gs-icon--eye'
                       : 'gs-icon--eye-off'
                   "
-                  @click="showCurrentPassword"
+                  @click="showOldPassword"
                 >
                 </i>
               </el-input>
             </el-form-item>
             <el-form-item
-              v-custom-input="updateForm.newPassword"
+              v-custom-input="form.newPassword"
               class="gs-form-item--auth"
               label="New Password"
               prop="newPassword"
             >
               <el-input
-                v-model="updateForm.newPassword"
+                v-model="form.newPassword"
                 :type="newPasswordFieldType"
                 auto-complete="off"
               >
@@ -58,13 +58,13 @@
               </el-input>
             </el-form-item>
             <el-form-item
-              v-custom-input="updateForm.confirmNewPassword"
+              v-custom-input="form.confirmNewPassword"
               class="gs-form-item--auth"
               label="Confirm New Password"
               prop="confirmNewPassword"
             >
               <el-input
-                v-model="updateForm.confirmNewPassword"
+                v-model="form.confirmNewPassword"
                 :type="confirmNewPasswordFieldType"
                 auto-complete="off"
               >
@@ -86,7 +86,7 @@
               :loading="updating"
               type="primary"
               class="px-5"
-              @click="update"
+              @click="updateMyPassword"
               >Update</el-button
             >
           </el-form-item>
@@ -97,6 +97,8 @@
 </template>
 
 <script>
+import auth from '~/controllers/auth'
+
 export default {
   name: 'Security',
   data() {
@@ -104,8 +106,8 @@ export default {
       if (value === '') {
         callback(new Error('Please enter new password'))
       } else {
-        if (this.updateForm.confirmNewPassword !== '') {
-          this.$refs.resetPasswordForm.validateField('confirmNewPassword')
+        if (this.form.confirmNewPassword !== '') {
+          this.$refs.updatePassword.validateField('confirmNewPassword')
         }
         callback()
       }
@@ -113,7 +115,7 @@ export default {
     const confirmNewPassword = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('Please confirm your new password'))
-      } else if (value !== this.updateForm.newPassword) {
+      } else if (value !== this.form.newPassword) {
         callback(new Error("Passwords don't match"))
       } else {
         callback()
@@ -121,13 +123,13 @@ export default {
     }
     return {
       updating: false,
-      updateForm: {
-        currentPassword: '',
+      form: {
+        oldPassword: '',
         newPassword: '',
         confirmNewPassword: ''
       },
       rules: {
-        currentPassword: [
+        oldPassword: [
           {
             required: true,
             message: "Password field can't be blank.",
@@ -137,15 +139,15 @@ export default {
         newPassword: [{ validator: newPassword, trigger: 'blur' }],
         confirmNewPassword: [{ validator: confirmNewPassword, trigger: 'blur' }]
       },
-      currentPasswordFieldType: 'password',
+      oldPasswordFieldType: 'password',
       newPasswordFieldType: 'password',
       confirmNewPasswordFieldType: 'password'
     }
   },
   methods: {
-    showCurrentPassword() {
-      this.currentPasswordFieldType =
-        this.currentPasswordFieldType === 'password' ? 'text' : 'password'
+    showOldPassword() {
+      this.oldPasswordFieldType =
+        this.oldPasswordFieldType === 'password' ? 'text' : 'password'
     },
     showNewPassword() {
       this.newPasswordFieldType =
@@ -155,8 +157,28 @@ export default {
       this.confirmNewPasswordFieldType =
         this.confirmNewPasswordFieldType === 'password' ? 'text' : 'password'
     },
-    update() {
-      //
+    updateMyPassword() {
+      this.$refs.updatePassword.validate((valid) => {
+        if (valid) {
+          this.updating = true
+          auth
+            .updatePassword(this.form)
+            .then((response) => {
+              const res = response.data
+              if (!res.error) {
+                this.$message.success('Password reset successful')
+                this.$refs.updatePassword.clearFields()
+                this.updating = false
+              }
+            })
+            .catch(() => {
+              this.updating = false
+              this.$message.error('An error occurred')
+            })
+        } else {
+          return false
+        }
+      })
     }
   }
 }

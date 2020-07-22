@@ -6,6 +6,7 @@ import scrollBehavior from './router.scrollBehavior.js'
 const _13229caa = () => interopDefault(import('../pages/accounts/forgot-password.vue' /* webpackChunkName: "pages/accounts/forgot-password" */))
 const _7f82644e = () => interopDefault(import('../pages/accounts/login.vue' /* webpackChunkName: "pages/accounts/login" */))
 const _2527a9ce = () => interopDefault(import('../pages/accounts/register.vue' /* webpackChunkName: "pages/accounts/register" */))
+const _1689bf44 = () => interopDefault(import('../pages/accounts/reset-password.vue' /* webpackChunkName: "pages/accounts/reset-password" */))
 const _c3fadd38 = () => interopDefault(import('../pages/accounts/verify.vue' /* webpackChunkName: "pages/accounts/verify" */))
 const _0432f0ad = () => interopDefault(import('../pages/admin/categories/index.vue' /* webpackChunkName: "pages/admin/categories/index" */))
 const _8512a942 = () => interopDefault(import('../pages/admin/leaderboard.vue' /* webpackChunkName: "pages/admin/leaderboard" */))
@@ -55,6 +56,10 @@ export const routerOptions = {
     path: "/accounts/register",
     component: _2527a9ce,
     name: "accounts-register"
+  }, {
+    path: "/accounts/reset-password",
+    component: _1689bf44,
+    name: "accounts-reset-password"
   }, {
     path: "/accounts/verify",
     component: _c3fadd38,

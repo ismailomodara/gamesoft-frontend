@@ -16,7 +16,7 @@
           title="Notifications"
           width="200"
           trigger="click"
-          content="Display users' activities here"
+          content="Message from admin"
         >
           <el-badge slot="reference" :value="2" class="item" type="success">
             <div class="gs-notifications">

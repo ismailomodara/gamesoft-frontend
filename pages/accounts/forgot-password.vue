@@ -8,7 +8,7 @@
         <div>
           <h4 class="gs-auth-heading">Recover your password</h4>
           <el-form
-            ref="loginForm"
+            ref="forgotPassword"
             :model="form"
             :rules="rules"
             label-width="200px"
@@ -29,7 +29,7 @@
             </el-form-item>
             <el-form-item class="d-flex justify-content-center">
               <el-button
-                :loading="loggingIn"
+                :loading="sending"
                 type="primary"
                 class="px-5"
                 @click="sendLink"
@@ -53,12 +53,14 @@
 </template>
 
 <script>
+import auth from '~/controllers/auth'
+
 export default {
   name: 'ForgotPassword',
   data() {
     return {
       logo: '/logo.svg',
-      loggingIn: false,
+      sending: false,
       passwordFieldType: 'password',
       form: {
         email: ''
@@ -81,7 +83,29 @@ export default {
   },
   methods: {
     sendLink() {
-      //
+      this.$refs.forgotPassword.validate((valid) => {
+        if (valid) {
+          this.sending = true
+          auth
+            .recovery(this.form)
+            .then((response) => {
+              const res = response.data
+              if (!res.error) {
+                this.$message.success(
+                  'Recovery link has been sent to your mail.'
+                )
+                this.$refs.forgotPassword.clearFields()
+                this.sending = false
+              }
+            })
+            .catch(() => {
+              this.sending = false
+              this.$message.error('An error occurred')
+            })
+        } else {
+          return false
+        }
+      })
     }
   }
 }

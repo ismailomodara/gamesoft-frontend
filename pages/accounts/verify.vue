@@ -16,7 +16,7 @@
             <span
               class="text-primary"
               :style="{ cursor: 'pointer' }"
-              @click="resendVerificationMail"
+              @click="sendVerificationMail"
               >Resend</span
             >
           </p>
@@ -41,38 +41,24 @@ export default {
   data() {
     return {
       logo: '/logo.svg',
-      email: this.$route.params.email || '',
+      email: this.$store.state.auth.newUserEmail,
       sendingMail: false
     }
   },
   created() {
-    this.verifyAccount()
+    this.sendVerificationMail()
   },
   methods: {
-    verifyAccount() {
+    sendVerificationMail() {
+      this.sendingMail = true
       auth
-        .verify(this.email)
+        .verify({ email: this.email })
         .then((response) => {
           const res = response.data
           if (!res.error) {
             this.$message.success('Verification mail sent.')
+            this.sendingMail = false
           }
-        })
-        .catch((error) => {
-          this.$message.error(error.response.data.response.errors.email)
-        })
-    },
-    resendVerificationMail() {
-      this.sendingMail = true
-      auth
-        .verify(this.email)
-        .then((response) => {
-          const res = response.data
-          if (!res.error) {
-            this.$message.success('Verification mail resent.')
-            this.$router.push({ name: 'accounts-login' })
-          }
-          this.sendingMail = false
         })
         .catch((error) => {
           this.$message.error(error.response.data.response.errors.email)

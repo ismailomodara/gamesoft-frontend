@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import Profile from '~/components/Settings/Profile'
-import Security from '~/components/Settings/Security'
-import Payment from '~/components/Settings/Payment'
+import Profile from '~/components/User/Settings/Profile'
+import Security from '~/components/User/Settings/Security'
+import Payment from '~/components/User/Settings/Payment'
 
 export default {
   name: 'Settings',

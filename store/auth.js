@@ -3,18 +3,23 @@ import auth from '../controllers/auth'
 import $axios from '../plugins/axios'
 
 export const state = () => ({
+  newUserEmail: '',
   token: Cookies.get('gamesoft-token') || null,
   authenticated: false,
   user: {}
 })
 
 export const getters = {
+  newUserEmail: (state) => state.newUserEmail,
   token: (state) => state.token,
   authenticated: (state) => state.authenticated,
   user: (state) => state.user
 }
 
 export const mutations = {
+  NEW_USER_EMAIL(state, newUserEmail) {
+    state.newUserEmail = newUserEmail
+  },
   TOKEN(state, token) {
     state.token = token
   },

@@ -20,8 +20,18 @@ export default {
   },
 
   verify(email) {
-    return $axios.post('/user/send_verification', {
-      email
-    })
+    return $axios.post('/user/send_verification', email)
+  },
+
+  recovery(email) {
+    return $axios.post('/user/recovery', email)
+  },
+
+  reset(payload) {
+    return $axios.post('/user/reset_password', payload)
+  },
+
+  updatePassword(payload) {
+    return $axios.post('/user/update_password', payload)
   }
 }
