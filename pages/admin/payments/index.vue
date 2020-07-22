@@ -1,22 +1,12 @@
 <template>
   <div class="gs-activities mt-4">
     <el-form class="gs-filters">
-      <el-dropdown @command="filterBy">
-        <el-button plain size="medium"
-          >Filter by<i class="gs-icon--chevron-down"></i
-        ></el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="all">All</el-dropdown-item>
-          <el-dropdown-item command="approved">Approved</el-dropdown-item>
-          <el-dropdown-item command="unapproved">Unapproved</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
       <el-form-item class="gs-form-item--auth" label="" prop="search">
         <el-input
           v-model="searchQuery"
           type="text"
           suffix-icon="gs-icon--search"
-          placeholder="Search payment by property"
+          placeholder="Search category"
         ></el-input>
       </el-form-item>
     </el-form>

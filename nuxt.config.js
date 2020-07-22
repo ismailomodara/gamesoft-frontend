@@ -39,6 +39,7 @@ export default {
     '@/plugins/element-ui',
     '@/plugins/directives',
     '@/plugins/dates',
+    { src: '@/plugins/paystack', ssr: false },
     { src: '@/plugins/vue-csv-import', ssr: false },
     { src: '@/plugins/local-storage', ssr: false }
   ],

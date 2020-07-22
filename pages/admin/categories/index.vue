@@ -9,26 +9,18 @@
       </nuxt-link>
     </div>
     <el-card>
-      <div class="gs-filters">
-        <el-dropdown @command="filterBy">
-          <el-button plain size="medium"
-            >Filter by<i class="gs-icon--chevron-down"></i
-          ></el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="all">All</el-dropdown-item>
-            <el-dropdown-item command="active">Active</el-dropdown-item>
-            <el-dropdown-item command="inactive">Inactive</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <el-input
-          v-model="searchQuery"
-          suffix-icon="gs-icon--search"
-          type="text"
-          placeholder="Search category"
-          :disabled="!allCategoriesFiltered.length"
-          @input="filterWithQuery"
-        ></el-input>
-      </div>
+      <el-form class="gs-filters">
+        <el-form-item class="gs-form-item--auth" label="" prop="search">
+          <el-input
+            v-model="searchQuery"
+            suffix-icon="gs-icon--search"
+            type="text"
+            placeholder="Search category"
+            :disabled="!allCategoriesFiltered.length"
+            @input="filterWithQuery"
+          ></el-input>
+        </el-form-item>
+      </el-form>
       <el-table v-loading="gettingCategories" :data="allCategoriesFiltered">
         <el-table-column label="" width="30"> </el-table-column>
         <el-table-column prop="name" label="Name">

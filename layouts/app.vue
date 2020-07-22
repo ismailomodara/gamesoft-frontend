@@ -11,14 +11,15 @@
             <p>{{ email }}</p>
           </div>
         </div>
-        <el-popover
-          placement="right"
-          title="Notifications"
-          width="200"
-          trigger="click"
-          content="Message from admin"
-        >
-          <el-badge slot="reference" :value="2" class="item" type="success">
+        <el-popover placement="right" width="200" trigger="hover">
+          <div class="gs-announcements">
+            <h6>New Feature!!!</h6>
+            <p>
+              Users get notified about new features on the app, ongoing
+              contests, upcoming contests and the likes.
+            </p>
+          </div>
+          <el-badge slot="reference" is-dot type="success">
             <div class="gs-notifications">
               <i class="gs-icon--bell"></i>
             </div>
@@ -28,33 +29,21 @@
       <div class="gs-user-balance">
         <p>Total Winnings</p>
         <h3>&#8358; 3,200.00</h3>
-        <div class="gs-pill">Withdraw</div>
-        <div class="gs-user-name"></div>
+        <div class="gs-pill" @click="showWithdrawalDialog = true">Withdraw</div>
       </div>
       <el-menu
         :default-active="activeTab"
         :router="true"
         class="gs-app-layout-menu"
       >
-        <el-menu-item :route="{ name: 'app-dashboard' }" index="dashboard">
-          <i class="gs-icon--grid"></i>
-          <span>Dashboard</span>
-        </el-menu-item>
-        <el-menu-item :route="{ name: 'app-categories' }" index="categories">
-          <i class="gs-icon--server"></i>
-          <span>Categories</span>
-        </el-menu-item>
-        <el-menu-item :route="{ name: 'app-activities' }" index="activities">
-          <i class="gs-icon--clock"></i>
-          <span>Activities</span>
-        </el-menu-item>
-        <el-menu-item :route="{ name: 'app-referrals' }" index="referrals">
-          <i class="gs-icon--user-plus"></i>
-          <span>Referrals</span>
-        </el-menu-item>
-        <el-menu-item :route="{ name: 'app-settings' }" index="settings">
-          <i class="gs-icon--settings"></i>
-          <span>Settings</span>
+        <el-menu-item
+          v-for="(route, index) in routes"
+          :key="index"
+          :route="{ name: `app-${route.index}` }"
+          :index="route.index"
+        >
+          <i :class="`gs-icon--${route.icon}`"></i>
+          <span>{{ route.label }}</span>
         </el-menu-item>
       </el-menu>
       <div class="gs-logout" @click="logout">
@@ -72,27 +61,65 @@
       <div v-if="sidebarOpen" class="overlay " @click="closeSidenav"></div>
     </transition>
     <div class="gs-app-layout-main">
-      <nuxt />
+      <transition name="fade" mode="out-in">
+        <nuxt />
+      </transition>
     </div>
+    <withdraw :show.sync="showWithdrawalDialog" />
   </div>
 </template>
 
 <script>
+import Withdraw from '../components/User/Wallet/Withdraw'
+
 export default {
   name: 'AppLayout',
+  components: {
+    Withdraw
+  },
   data() {
     return {
       activeTab: '',
       sidebarOpen: false,
-      user: this.$store.state.auth.user
+      showWithdrawalDialog: false,
+      routes: [
+        {
+          label: 'Dashboard',
+          index: 'dashboard',
+          icon: 'grid'
+        },
+        {
+          label: 'Categories',
+          index: 'categories',
+          icon: 'server'
+        },
+        {
+          label: 'Wallet',
+          index: 'wallet',
+          icon: 'credit-card'
+        },
+        {
+          label: 'Referrals',
+          index: 'referrals',
+          icon: 'user-plus'
+        },
+        {
+          label: 'Settings',
+          index: 'settings',
+          icon: 'settings'
+        }
+      ]
     }
   },
   computed: {
+    user() {
+      return this.$store.state.auth.user
+    },
     name() {
-      return `${this.user.firstname || ''} ${this.user.lastname || ''}`
+      return `${this.user.firstname} ${this.user.lastname}`
     },
     email() {
-      return this.user.email || ''
+      return this.user.email
     }
   },
   watch: {
@@ -173,6 +200,10 @@ export default {
         margin-bottom: 0;
       }
 
+      .el-badge:focus {
+        outline: none;
+      }
+
       .el-badge__content {
         font-size: 10px;
       }
@@ -193,6 +224,7 @@ export default {
         }
       }
     }
+
     .gs-user-balance {
       height: 170px;
       padding: 15px 0;
@@ -226,11 +258,12 @@ export default {
         height: 55px;
         display: flex;
         align-items: center;
-        font-size: 1rem;
+        font-size: 0.9rem;
         border-radius: 5px;
         opacity: 0.5;
 
         i {
+          font-size: 0.95rem;
           margin-right: 12px;
         }
 
@@ -320,6 +353,28 @@ export default {
       margin: auto;
       padding: 40px 20px;
     }
+  }
+}
+
+.gs-announcements {
+  padding: 12px;
+
+  h6 {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.875rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+    opacity: 0.8;
+    color: #3b8070;
+  }
+
+  p {
+    font-size: 0.875rem;
+    font-family: 'Avenir', sans-serif;
+    line-height: 1.8;
+    opacity: 0.74;
+    color: #070013;
   }
 }
 

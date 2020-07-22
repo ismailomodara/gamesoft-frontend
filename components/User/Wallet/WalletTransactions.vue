@@ -1,16 +1,6 @@
 <template>
-  <div class="gs-activities mt-4">
+  <div class="gs-activities">
     <el-form class="gs-filters">
-      <el-dropdown @command="filterBy">
-        <el-button plain
-          >Filter by<i class="gs-icon--chevron-down"></i
-        ></el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="all">All</el-dropdown-item>
-          <el-dropdown-item command="credit">Credit CR</el-dropdown-item>
-          <el-dropdown-item command="debit">Debit DB</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
       <el-form-item class="gs-form-item--auth" label="" prop="search">
         <el-input
           v-model="searchQuery"
@@ -33,21 +23,37 @@
           </span>
         </template>
       </el-table-column>
+      <el-table-column label="" width="100">
+        <template slot-scope="scope">
+          <p v-if="scope.row.type === 'credit'" class="gs-transaction-desc">
+            Credit
+          </p>
+          <p v-else class="gs-transaction-desc">Debit</p>
+        </template>
+      </el-table-column>
       <el-table-column prop="transactionId" label="Transaction Id" width="180">
       </el-table-column>
-      <el-table-column prop="amount" label="Amount">
-        <template slot-scope="scope"> &#8358; {{ scope.row.amount }} </template>
+      <el-table-column prop="amount" label="Amount" width="120">
+        <template slot-scope="scope">
+          &#8358; {{ scope.row.amount }}.00
+        </template>
       </el-table-column>
-      <el-table-column prop="description" label="Description">
+      <el-table-column prop="description" label="Description" width="220">
       </el-table-column>
-      <el-table-column prop="date" label="Date"></el-table-column>
+      <el-table-column prop="date" label="Date" width="200"></el-table-column>
+      <el-table-column prop="time" label="Time" width="120"></el-table-column>
+      <el-table-column>
+        <el-button size="mini" plain type="primary" icon="el-icon-download"
+          >Receipt</el-button
+        >
+      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AllActivities',
+  name: 'WalletTransactions',
   props: {
     recentActivities: {
       type: Array,
@@ -65,63 +71,72 @@ export default {
           transactionId: 'GST-DB03042020',
           amount: '1,500',
           description: 'Made a withdrawal',
-          date: '21st December, 2018'
+          date: 'Sat, 21st December, 2018',
+          time: '02:36 pm'
         },
         {
           type: 'credit',
           transactionId: 'GST-CR03042020',
           amount: '2,000',
           description: 'Winnings addition',
-          date: '21st December, 2018'
+          date: 'Sat, 21st December, 2018',
+          time: '12:17 pm'
         },
         {
           type: 'credit',
           transactionId: 'GST-CR03042020',
           amount: '500',
           description: 'Make a deposit',
-          date: '21st December, 2018'
+          date: 'Sat, 21st December, 2018',
+          time: '04:00 pm'
         },
         {
           type: 'debit',
           transactionId: 'GST-DB03042020',
           amount: '800',
           description: 'Made a withdrawal',
-          date: '21st November, 2018'
+          date: 'Sat, 21st November, 2018',
+          time: '04:00 pm'
         },
         {
           type: 'debit',
           transactionId: 'GST-DB03042020',
           amount: '1,500',
           description: 'Made a deposit',
-          date: '21st December, 2018'
+          date: 'Sat, 21st December, 2018',
+          time: '04:00 pm'
         },
         {
           type: 'credit',
           transactionId: 'GST-CR03042020',
           amount: '2,000',
           description: 'Winnings addition',
-          date: '21st December, 2018'
+          date: 'Sat, 21st December, 2018',
+          time: '04:00 pm'
         },
         {
           type: 'credit',
           transactionId: 'GST-CR03042020',
           amount: '500',
           description: 'Make a deposit',
-          date: '21st December, 2018'
+          date: 'Sat, 21st December, 2018',
+          time: '04:00 pm'
         },
         {
           type: 'debit',
           transactionId: 'GST-DB03042020',
           amount: '800',
           description: 'Made a withdrawal',
-          date: '21st December, 2018'
+          date: 'Sat, 21st December, 2018',
+          time: '04:00 pm'
         },
         {
           type: 'debit',
           transactionId: 'GST-DB03042020',
           amount: '1,500',
           description: 'Made a deposit',
-          date: '21st December, 2018'
+          date: 'Sat, 21st December, 2018',
+          time: '04:00 pm'
         }
       ]
     }
@@ -180,39 +195,21 @@ export default {
     }
   }
 
+  .gs-transaction-desc {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+  }
+
   a {
     font-weight: 600;
     font-size: 12px;
   }
-}
 
-.gs-filters {
-  display: flex;
-  justify-content: flex-end;
-  margin: 20px 0;
-
-  .el-form-item {
-    margin-bottom: 0;
-    height: auto !important;
-    width: 300px;
-  }
-
-  .el-button {
-    margin-right: 10px;
+  .el-dropdown-link {
+    padding: 8px;
     display: flex;
+    justify-content: center;
     align-items: center;
-
-    i {
-      margin-left: 5px;
-      font-size: 12px;
-    }
-
-    &:hover {
-      border-color: #7f828b;
-      color: #7f828b;
-      transform: translateY(0) !important;
-      box-shadow: none !important;
-    }
   }
 }
 </style>

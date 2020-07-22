@@ -65,7 +65,7 @@
         <el-row class="mt-4">
           <el-col :span="24">
             <el-card>
-              <recent-activities></recent-activities>
+              <recent-transactions />
             </el-card>
           </el-col>
         </el-row>
@@ -77,14 +77,14 @@
 
 <script>
 import SendMessage from '~/components/SendMessage'
-import RecentActivities from '~/components/Activities/RecentActivities'
+import RecentTransactions from '~/components/User/Wallet/RecentTransactions'
 
 export default {
   name: 'AdminUserView',
   layout: 'admin',
   components: {
     SendMessage,
-    RecentActivities
+    RecentTransactions
   },
   data() {
     return {

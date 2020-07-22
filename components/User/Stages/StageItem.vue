@@ -106,6 +106,7 @@ export default {
   p {
     font-size: 0.85rem;
     margin-bottom: 2px;
+    opacity: 0.5;
   }
 }
 </style>

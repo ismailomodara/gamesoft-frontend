@@ -2,21 +2,12 @@
   <div>
     <div class="d-flex justify-content-between align-items-center mb-5">
       <h3 class="gs-app-layout-heading">
-        ALL USERS ({{ allUsersFiltered.length }})
+        Users
       </h3>
     </div>
     <el-card>
       <el-form class="gs-filters">
-        <el-dropdown @command="filterBy">
-          <el-button plain size="small"
-            >Filter by<i class="gs-icon--chevron-down"></i
-          ></el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="all">All</el-dropdown-item>
-            <el-dropdown-item command="active">Online</el-dropdown-item>
-            <el-dropdown-item command="inactive">Offline</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+        <h4>{{ allUsersFiltered.length }} users</h4>
         <el-form-item class="gs-form-item--auth" label="" prop="search">
           <el-input
             v-model="searchQuery"

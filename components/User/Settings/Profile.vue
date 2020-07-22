@@ -2,39 +2,44 @@
   <el-row type="flex" :gutter="30">
     <el-col :lg="7">
       <el-card>
-        <el-upload
-          action="https://jsonplaceholder.typicode.com/posts/"
-          list-type="picture-card"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-        >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        <div class="gs-user--profile__image">
+          <avatar
+            v-loading="uploadingPhoto"
+            :src="form.avatar"
+            :size="120"
+            icon="el-icon-user-solid"
+          ></avatar>
+          <image-upload
+            :upload-status.sync="uploadingPhoto"
+            :photo-url.sync="form.avatar"
+          />
+        </div>
       </el-card>
     </el-col>
     <el-col :lg="17">
       <el-card>
         <el-form
           ref="updateForm"
-          :model="updateForm"
+          :model="form"
           :rules="rules"
           label-width="200px"
           label-position="top"
           class="gs-form"
         >
           <div class="mb-4">
-            <h3 class="gs-app-layout-heading">PERSONAL INFORMATION</h3>
+            <div class="gs-layout--heading">
+              <h3>Personal Information</h3>
+            </div>
             <el-row :gutter="20" type="flex" class="flex-wrap">
               <el-col :xs="24" :sm="12">
                 <el-form-item
-                  v-custom-input="updateForm.firstName"
+                  v-custom-input="form.firstname"
                   class="gs-form-item--auth"
                   label="Firstname"
-                  prop="firstName"
+                  prop="firstname"
                 >
                   <el-input
-                    v-model="updateForm.firstName"
+                    v-model="form.firstname"
                     type="text"
                     auto-complete="off"
                   ></el-input>
@@ -42,13 +47,13 @@
               </el-col>
               <el-col :xs="24" :sm="12">
                 <el-form-item
-                  v-custom-input="updateForm.lastName"
+                  v-custom-input="form.lastname"
                   class="gs-form-item--auth"
                   label="Lastname"
-                  prop="lastName"
+                  prop="lastname"
                 >
                   <el-input
-                    v-model="updateForm.lastName"
+                    v-model="form.lastname"
                     type="text"
                     auto-complete="off"
                   ></el-input>
@@ -58,13 +63,13 @@
             <el-row :gutter="20" type="flex" class="flex-wrap">
               <el-col :xs="24" :sm="12">
                 <el-form-item
-                  v-custom-input="updateForm.userName"
+                  v-custom-input="form.username"
                   class="gs-form-item--auth"
                   label="Username"
-                  prop="userName"
+                  prop="username"
                 >
                   <el-input
-                    v-model="updateForm.userName"
+                    v-model="form.username"
                     type="text"
                     auto-complete="off"
                   ></el-input>
@@ -72,13 +77,13 @@
               </el-col>
               <el-col :xs="24" :sm="12">
                 <el-form-item
-                  v-custom-input="updateForm.email"
+                  v-custom-input="form.email"
                   class="gs-form-item--auth"
                   label="Email"
                   prop="email"
                 >
                   <el-input
-                    v-model="updateForm.email"
+                    v-model="form.email"
                     disabled
                     type="email"
                     auto-complete="off"
@@ -89,13 +94,13 @@
             <el-row :gutter="20" type="flex" class="flex-wrap">
               <el-col :xs="24" :sm="12">
                 <el-form-item
-                  v-custom-input="updateForm.phoneNumber"
+                  v-custom-input="form.phoneNumber"
                   class="gs-form-item--auth"
                   label="Phone Number"
                   prop="phoneNumber"
                 >
                   <el-input
-                    v-model="updateForm.phoneNumber"
+                    v-model="form.phoneNumber"
                     type="text"
                     auto-complete="off"
                   ></el-input>
@@ -103,10 +108,10 @@
               </el-col>
               <el-col :xs="24" :sm="12">
                 <el-form-item class="gs-selection" label="Gender" prop="gender">
-                  <el-radio v-model="updateForm.gender" label="male" border
+                  <el-radio v-model="form.gender" label="male" border
                     >Male</el-radio
                   >
-                  <el-radio v-model="updateForm.gender" label="female" border
+                  <el-radio v-model="form.gender" label="female" border
                     >Female</el-radio
                   >
                 </el-form-item>
@@ -114,12 +119,14 @@
             </el-row>
           </div>
           <div class="mb-5">
-            <h3 class="gs-app-layout-heading">PREFERENCES</h3>
+            <div class="gs-layout--heading">
+              <h3>Preferences</h3>
+            </div>
             <el-form-item
               class="gs-selection flex-column align-items-start"
               label="Categories"
             >
-              <el-checkbox-group v-model="updateForm.categories">
+              <el-checkbox-group v-model="form.categories">
                 <el-checkbox label="Music"></el-checkbox>
                 <el-checkbox label="Sports"></el-checkbox>
                 <el-checkbox label="IQ Basic"></el-checkbox>
@@ -144,37 +151,45 @@
 </template>
 
 <script>
+import Avatar from './Avatar'
+import ImageUpload from './ImageUpload'
+
 export default {
   name: 'Profile',
+  components: {
+    Avatar,
+    ImageUpload
+  },
   data() {
     return {
-      imageUrl: '',
+      uploadingPhoto: false,
       updating: false,
-      updateForm: {
-        firstName: '',
-        lastName: '',
-        userName: '',
+      form: {
+        avatar: '',
+        firstname: '',
+        lastname: '',
+        username: '',
         email: '',
         phoneNumber: '',
         gender: '',
         categories: []
       },
       rules: {
-        firstName: [
+        firstname: [
           {
             required: true,
             message: 'Field is required',
             trigger: 'change'
           }
         ],
-        lastName: [
+        lastname: [
           {
             required: true,
             message: 'Field is required',
             trigger: 'change'
           }
         ],
-        userName: [
+        username: [
           {
             required: true,
             message: 'Choose a username',
@@ -210,22 +225,13 @@ export default {
       }
     }
   },
+  created() {
+    this.form = { ...this.$store.state.auth.user }
+    this.form.avatar = ''
+    this.form.gender = ''
+    this.form.categories = []
+  },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('Avatar picture must be JPG format!')
-      }
-      if (!isLt2M) {
-        this.$message.error('Avatar picture size can not exceed 2MB!')
-      }
-      return isJPG && isLt2M
-    },
     update() {
       //
     }
@@ -234,27 +240,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
+.gs-user--profile__image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

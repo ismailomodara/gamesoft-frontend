@@ -1,5 +1,5 @@
 <template>
-  <div class="gs-category-item" :class="{ inverse: category.id % 2 === 0 }">
+  <div class="gs-category-item">
     <div class="d-flex justify-content-between">
       <div>
         <h4>{{ category.name }}</h4>
@@ -79,7 +79,6 @@ export default {
   background: #ffffff;
   border-radius: 10px;
   padding: 30px 20px;
-  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -127,6 +126,7 @@ export default {
   p {
     font-size: 0.85rem;
     margin-bottom: 2px;
+    opacity: 0.5;
   }
 
   .gs-illustration {
@@ -141,6 +141,12 @@ export default {
       height: 100%;
       width: auto;
     }
+  }
+}
+
+@media (max-width: 1280px) {
+  .gs-category-item {
+    margin-bottom: 30px;
   }
 }
 </style>

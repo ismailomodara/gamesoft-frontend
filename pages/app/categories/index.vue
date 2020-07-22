@@ -1,11 +1,17 @@
 <template>
   <div>
-    <div class="gs-app-section-spacing">
-      <h3 class="gs-app-layout-heading">
-        ALL CATEGORIES ({{ categories.length }})
-      </h3>
-      <el-row type="flex" :gutter="40" class="flex-wrap">
-        <el-col v-for="category in categories" :key="category.id" :lg="8">
+    <div class="gs-layout--section">
+      <div class="gs-layout--heading">
+        <h3>All ({{ categories.length }}) Categories</h3>
+      </div>
+      <el-row type="flex" :gutter="20" class="flex-wrap">
+        <el-col
+          v-for="category in categories"
+          :key="category.id"
+          :sm="12"
+          :md="8"
+          :lg="8"
+        >
           <category-item :category="category"></category-item>
         </el-col>
       </el-row>
@@ -14,7 +20,7 @@
 </template>
 
 <script>
-import CategoryItem from '../../../components/Categories/CategoryItem'
+import CategoryItem from '../../../components/User/Categories/CategoryItem'
 
 export default {
   name: 'Dashboard',

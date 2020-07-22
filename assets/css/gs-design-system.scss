@@ -63,7 +63,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin: 20px 0;
+  margin: 0 0 20px;
 
   .el-form-item {
     margin-bottom: 0;
@@ -117,7 +117,7 @@
 
 /* ========== CARD ========== */
 .el-card {
-  padding: 50px 30px;
+  padding: 40px;
   border-radius: 10px;
   box-shadow: none !important;
 
@@ -210,11 +210,30 @@
   }
 }
 
-
 /* ======== TABLE ======== */
 .el-table {
   th {
     text-transform: uppercase;
     font-size: 12px;
+  }
+}
+
+
+/* ======== TYPOGRAPHY ======== */
+.gs-layout--section:not(:last-child) {
+  margin-bottom: 50px;
+}
+
+.gs-layout--heading {
+  margin-bottom: 20px;
+
+  h3 {
+    font-size: 0.92rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #070013;
+    opacity: 0.7;
   }
 }

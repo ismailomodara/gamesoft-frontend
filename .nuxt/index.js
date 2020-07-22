@@ -16,6 +16,7 @@ import nuxt_plugin_axios_352bbd2a from 'nuxt_plugin_axios_352bbd2a' // Source: .
 import nuxt_plugin_elementui_d905880e from 'nuxt_plugin_elementui_d905880e' // Source: ../plugins/element-ui (mode: 'all')
 import nuxt_plugin_directives_7e8ad6f8 from 'nuxt_plugin_directives_7e8ad6f8' // Source: ../plugins/directives (mode: 'all')
 import nuxt_plugin_dates_2248e911 from 'nuxt_plugin_dates_2248e911' // Source: ../plugins/dates (mode: 'all')
+import nuxt_plugin_paystack_aaf08658 from 'nuxt_plugin_paystack_aaf08658' // Source: ../plugins/paystack (mode: 'client')
 import nuxt_plugin_vuecsvimport_88841232 from 'nuxt_plugin_vuecsvimport_88841232' // Source: ../plugins/vue-csv-import (mode: 'client')
 import nuxt_plugin_localstorage_6bbb00a5 from 'nuxt_plugin_localstorage_6bbb00a5' // Source: ../plugins/local-storage (mode: 'client')
 
@@ -193,6 +194,10 @@ async function createApp (ssrContext) {
 
   if (typeof nuxt_plugin_dates_2248e911 === 'function') {
     await nuxt_plugin_dates_2248e911(app.context, inject)
+  }
+
+  if (process.client && typeof nuxt_plugin_paystack_aaf08658 === 'function') {
+    await nuxt_plugin_paystack_aaf08658(app.context, inject)
   }
 
   if (process.client && typeof nuxt_plugin_vuecsvimport_88841232 === 'function') {

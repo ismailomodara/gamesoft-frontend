@@ -60,7 +60,9 @@
       <div v-if="sidebarOpen" class="overlay " @click="closeSidenav"></div>
     </transition>
     <div class="gs-admin-layout-main">
-      <nuxt />
+      <transition name="fade" mode="out-in">
+        <nuxt />
+      </transition>
     </div>
   </div>
 </template>

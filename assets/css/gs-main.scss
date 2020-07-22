@@ -5,6 +5,26 @@ $--color-text: #070013;
   color: #4d00d2;
   background: #4d00d230;
 }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 1s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/AvenirLTStd-Book.woff') format('woff');
+}
+
 @font-face {
   font-family: 'Quicksand';
   font-style: normal;
@@ -19,12 +39,18 @@ $--color-text: #070013;
   src: url('../fonts/Quicksand-Medium.woff') format('woff');
 }
 
-
 @font-face {
   font-family: 'Quicksand';
   font-style: normal;
   font-weight: 600;
   src: url('../fonts/Quicksand-SemiBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/Quicksand-Bold.woff') format('woff');
 }
 
 html, body {
@@ -206,17 +232,6 @@ a, a:hover {
   }
 }
 
-.gs-app-layout-heading {
-  text-transform: uppercase;
-  font-size: 1rem;
-  margin-bottom: 15px;
-  color: #070013;
-}
-
-.gs-app-section-spacing:not(:last-child) {
-  margin-bottom: 30px;
-}
-
 .dark {
   background: #070013;
 
@@ -244,7 +259,7 @@ a, a:hover {
 .gs-filters {
   display: flex;
   justify-content: flex-end;
-  margin: 20px 0;
+  margin: 0 0 20px;
 
   .el-input {
     padding-top: 0;

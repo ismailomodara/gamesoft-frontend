@@ -1,8 +1,10 @@
 <template>
   <div>
-    <div class="gs-app-section-spacing">
-      <h3 class="gs-app-layout-heading">Categories</h3>
-      <el-row type="flex" :gutter="40" class="flex-wrap">
+    <div class="gs-layout--section">
+      <div class="gs-layout--heading">
+        <h3>Categories</h3>
+      </div>
+      <el-row type="flex" :gutter="20" class="flex-wrap">
         <el-col
           v-for="category in categories"
           :key="category.id"
@@ -14,33 +16,44 @@
         </el-col>
       </el-row>
     </div>
-    <div class="gs-app-section-spacing">
-      <el-row type="flex" :gutter="40" class="flex-wrap">
-        <el-col :span="24">
-          <h3 class="gs-app-layout-heading">Credit</h3>
-          <div class="gs-credits">
-            <div class="gs-credit">
-              <p>Referrals Bonus</p>
-              <h3>&#8358;130.00</h3>
-            </div>
-            <div class="gs-credit">
-              <p>Quiz Funds</p>
-              <h3>&#8358;7,830.00</h3>
-            </div>
-            <div class="gs-credit">
-              <p>Referrals Bonus</p>
-              <h3>&#8358;680.00</h3>
-            </div>
+    <div class="gs-layout--section">
+      <div class="gs-layout--heading">
+        <h3>Credit</h3>
+      </div>
+      <el-row type="flex" :gutter="20" class="flex-wrap">
+        <el-col :sm="12" :md="8">
+          <div class="gs-credit">
+            <p>Referrals Bonus</p>
+            <h3>&#8358;130.00</h3>
           </div>
         </el-col>
-        <el-col :lg="16">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="gs-app-layout-heading mb-0">Recent Activities</h3>
-            <nuxt-link :to="{ name: 'app-activities' }">SEE ALL</nuxt-link>
+        <el-col :sm="12" :md="8">
+          <div class="gs-credit">
+            <p>Quiz Funds</p>
+            <h3>&#8358;7,830.00</h3>
           </div>
-          <el-card>
-            <recent-activities></recent-activities>
-          </el-card>
+        </el-col>
+        <el-col :sm="12" :md="8">
+          <div class="gs-credit">
+            <p>Referrals Bonus</p>
+            <h3>&#8358;680.00</h3>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="gs-layout--section">
+      <el-row type="flex" :gutter="20" class="flex-wrap">
+        <el-col :sm="24" :md="16" :lg="16">
+          <div class="gs-layout--heading">
+            <h3>Recent Transactions</h3>
+          </div>
+          <recent-transactions />
+        </el-col>
+        <el-col :sm="24" :md="8" :lg="8">
+          <div class="gs-layout--heading">
+            <h3>Messages</h3>
+          </div>
+          <messages />
         </el-col>
       </el-row>
     </div>
@@ -48,15 +61,17 @@
 </template>
 
 <script>
-import CategoryItem from '../../components/Categories/CategoryItem'
-import RecentActivities from '../../components/Activities/RecentActivities'
+import CategoryItem from '../../components/User/Categories/CategoryItem'
+import RecentTransactions from '../../components/User/Wallet/RecentTransactions'
+import Messages from '../../components/User/Messages'
 
 export default {
   name: 'Dashboard',
   layout: 'app',
   components: {
     CategoryItem,
-    RecentActivities
+    RecentTransactions,
+    Messages
   },
   data() {
     return {
@@ -87,29 +102,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.gs-credits {
-  height: 100%;
+.gs-credit {
+  background: #fff;
+  height: 120px;
+  border-radius: 10px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
+  padding: 30px;
 
-  .gs-credit {
-    background: #fff;
-    width: calc(33.33% - 20px);
-    height: 120px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px;
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
 
-    &:not(:last-child) {
-      margin-bottom: 20px;
-    }
-
-    p {
-      margin-bottom: 0;
-    }
+  p {
+    margin-bottom: 0;
+    opacity: 0.74;
   }
 }
 

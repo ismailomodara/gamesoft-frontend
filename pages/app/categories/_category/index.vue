@@ -1,6 +1,8 @@
 <template>
   <div class="gs-app-section-spacing">
-    <h3 class="gs-app-layout-heading">ALL STAGES ({{ stages.length }})</h3>
+    <div class="gs-layout--heading">
+      <h3>All ({{ stages.length }}) Categories</h3>
+    </div>
     <el-row type="flex" :gutter="40" class="flex-wrap">
       <el-col :lg="8">
         <stage-item
@@ -20,8 +22,8 @@
 </template>
 
 <script>
-import StageItem from '~/components/Stage/StageItem'
-import StageItemShow from '~/components/Stage/StageItemShow'
+import StageItem from '~/components/User/Stages/StageItem'
+import StageItemShow from '~/components/User/Stages/StageItemShow'
 
 export default {
   name: 'Dashboard',

@@ -14,11 +14,11 @@ const _5f71066a = () => interopDefault(import('../pages/admin/login.vue' /* webp
 const _f7350404 = () => interopDefault(import('../pages/admin/payments/index.vue' /* webpackChunkName: "pages/admin/payments/index" */))
 const _31c57b26 = () => interopDefault(import('../pages/admin/transactions/index.vue' /* webpackChunkName: "pages/admin/transactions/index" */))
 const _6a13ba26 = () => interopDefault(import('../pages/admin/users/index.vue' /* webpackChunkName: "pages/admin/users/index" */))
-const _4e02d769 = () => interopDefault(import('../pages/app/activities.vue' /* webpackChunkName: "pages/app/activities" */))
 const _77a4c69b = () => interopDefault(import('../pages/app/categories/index.vue' /* webpackChunkName: "pages/app/categories/index" */))
 const _31830f48 = () => interopDefault(import('../pages/app/dashboard.vue' /* webpackChunkName: "pages/app/dashboard" */))
 const _617b5c2a = () => interopDefault(import('../pages/app/referrals.vue' /* webpackChunkName: "pages/app/referrals" */))
 const _198568e2 = () => interopDefault(import('../pages/app/settings/index.vue' /* webpackChunkName: "pages/app/settings/index" */))
+const _a7fb4916 = () => interopDefault(import('../pages/app/wallet.vue' /* webpackChunkName: "pages/app/wallet" */))
 const _447375bc = () => interopDefault(import('../pages/admin/categories/add.vue' /* webpackChunkName: "pages/admin/categories/add" */))
 const _c2d23034 = () => interopDefault(import('../pages/admin/payments/_id.vue' /* webpackChunkName: "pages/admin/payments/_id" */))
 const _1aa40f0e = () => interopDefault(import('../pages/admin/transactions/_id.vue' /* webpackChunkName: "pages/admin/transactions/_id" */))
@@ -89,10 +89,6 @@ export const routerOptions = {
     component: _6a13ba26,
     name: "admin-users"
   }, {
-    path: "/app/activities",
-    component: _4e02d769,
-    name: "app-activities"
-  }, {
     path: "/app/categories",
     component: _77a4c69b,
     name: "app-categories"
@@ -108,6 +104,10 @@ export const routerOptions = {
     path: "/app/settings",
     component: _198568e2,
     name: "app-settings"
+  }, {
+    path: "/app/wallet",
+    component: _a7fb4916,
+    name: "app-wallet"
   }, {
     path: "/admin/categories/add",
     component: _447375bc,

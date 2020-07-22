@@ -346,36 +346,6 @@ export default {
   }
 }
 
-.gs-filters {
-  display: flex;
-  justify-content: flex-end;
-  margin: 20px 0;
-
-  .el-form-item {
-    margin-bottom: 0;
-    height: auto !important;
-    width: 300px;
-  }
-
-  .el-button {
-    margin-right: 10px;
-    display: flex;
-    align-items: center;
-
-    i {
-      margin-left: 5px;
-      font-size: 12px;
-    }
-
-    &:hover {
-      border-color: #7f828b;
-      color: #7f828b;
-      transform: translateY(0) !important;
-      box-shadow: none !important;
-    }
-  }
-}
-
 .el-menu {
   height: 100%;
   background: #ffffff;

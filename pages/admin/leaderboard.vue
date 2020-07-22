@@ -3,7 +3,7 @@
     <div class="gs-app-section-spacing">
       <h3 class="gs-app-layout-heading">OVERVIEW</h3>
       <el-row type="flex" :gutter="40" class="flex-wrap mb-5">
-        <el-col :lg="8">
+        <el-col class="mb-4" :sm="12" :md="8" :lg="8">
           <el-card>
             <div class="gs-leaderboard-specifics">
               <div>
@@ -16,7 +16,7 @@
             </div>
           </el-card>
         </el-col>
-        <el-col :lg="8">
+        <el-col class="mb-4" :sm="12" :md="8" :lg="8">
           <el-card>
             <div class="gs-leaderboard-specifics">
               <div>
@@ -27,7 +27,7 @@
             </div>
           </el-card>
         </el-col>
-        <el-col :lg="8">
+        <el-col class="mb-4" :sm="12" :md="8" :lg="8">
           <el-card>
             <div class="gs-leaderboard-specifics">
               <div>
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import Leaderboard from '~/components/Leaderboard'
+import Leaderboard from '../../components/Admin/Leaderboard'
 
 export default {
   name: 'AdminLeaderboard',
