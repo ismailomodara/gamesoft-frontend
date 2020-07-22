@@ -3,7 +3,7 @@
     <div class="gs-app-layout-sidebar">
       <div class="gs-user">
         <div class="d-flex">
-          <div class="gs-user-avatar">
+          <div class="gs-user-avatar" @click="openSidenav">
             <img src="@/assets/img/mosh.jpeg" alt />
           </div>
           <div class="gs-user-details">
@@ -61,6 +61,16 @@
         <i class="gs-icon--power"></i>
       </div>
     </div>
+    <div
+      v-if="!sidebarOpen"
+      class="gs-mobile-sidebar--toggle"
+      @click="openSidenav"
+    >
+      <i class="gs-icon--menu"></i>
+    </div>
+    <transition name="overlay-fade" mode="out-in">
+      <div v-if="sidebarOpen" class="overlay " @click="closeSidenav"></div>
+    </transition>
     <div class="gs-app-layout-main">
       <nuxt />
     </div>
@@ -73,6 +83,7 @@ export default {
   data() {
     return {
       activeTab: '',
+      sidebarOpen: false,
       user: this.$store.state.auth.user
     }
   },
@@ -99,6 +110,14 @@ export default {
     }
   },
   methods: {
+    openSidenav() {
+      this.sidebarOpen = true
+      document.querySelector('.gs-app-layout-sidebar').classList.add('open')
+    },
+    closeSidenav() {
+      this.sidebarOpen = false
+      document.querySelector('.gs-app-layout-sidebar').classList.remove('open')
+    },
     logout() {
       this.$store
         .dispatch('auth/LOGOUT')
@@ -113,20 +132,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$--sidebar-width: 20%;
-
 .gs-app-layout {
   display: flex;
   height: 100vh;
   width: 100%;
-  overflow-y: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
 
   .gs-app-layout-sidebar {
-    width: $--sidebar-width;
-    background: #ffffff;
+    width: 300px;
     height: 100%;
+    background: #ffffff;
     padding: 40px 30px;
-    position: relative;
+    position: fixed;
+    z-index: 99;
 
     .gs-user {
       display: flex;
@@ -204,8 +223,7 @@ $--sidebar-width: 20%;
       border-right: none;
 
       .el-menu-item {
-        height: 70px;
-        padding-left: 30px !important;
+        height: 55px;
         display: flex;
         align-items: center;
         font-size: 1rem;
@@ -247,13 +265,181 @@ $--sidebar-width: 20%;
     }
   }
 
+  .gs-mobile-sidebar--toggle {
+    display: none;
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    height: 45px;
+    width: 45px;
+    background: #fff;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    border-radius: 100px;
+    z-index: 1;
+
+    i {
+      font-size: 1rem;
+    }
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 3;
+  }
+
+  .overlay-fade-enter-active,
+  .overlay-fade-leave-active {
+    transition-duration: 0.4s;
+    transition-property: opacity;
+    transition-timing-function: ease;
+  }
+
+  .overlay-fade-enter,
+  .overlay-fade-leave-active {
+    opacity: 0;
+  }
+
   .gs-app-layout-main {
-    width: calc(100% - #{$--sidebar-width});
+    position: relative;
+    left: 300px;
+    width: calc(100% - 300px);
     height: 100%;
     background: #f3eff9;
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: auto;
+    padding-bottom: 80px;
+
+    > div {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  .gs-app-layout {
+    .gs-app-layout-sidebar {
+      width: 80px;
+      padding: 50px 10px 20px;
+      transition: all 0.3s ease-out;
+
+      .gs-user-details,
+      .gs-user-balance,
+      span {
+        opacity: 0;
+        display: none;
+        transition-delay: 0.4s;
+        transition: opacity 0.3s ease-out;
+      }
+
+      .el-menu-item {
+        i {
+          margin-right: 0 !important;
+        }
+
+        span {
+          opacity: 0;
+          display: none;
+          transition-delay: 0.4s;
+          transition: opacity 0.3s ease-out;
+        }
+      }
+
+      &.open {
+        width: 300px;
+        padding: 40px 30px;
+        transition: all 0.3s ease-out;
+
+        .gs-user-details,
+        .gs-user-balance,
+        span {
+          opacity: 1 !important;
+          display: inline;
+          transition-delay: 0.4s;
+          transition: opacity 0.3s ease-in;
+        }
+
+        .gs-user-balance {
+          display: flex !important;
+        }
+
+        .el-menu-item {
+          i {
+            margin-right: 10px !important;
+          }
+
+          span {
+            opacity: 1;
+            display: inline;
+            transition-delay: 0.4s;
+            transition: opacity 0.3s ease-in;
+          }
+        }
+      }
+    }
+
+    .gs-app-layout-main {
+      left: 80px;
+      width: calc(100% - 80px);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .gs-app-layout {
+    .gs-app-layout-sidebar {
+      width: 300px;
+      left: -300px;
+      padding: 40px 30px;
+      transition: left 0.3s ease-out;
+
+      .gs-user-details,
+      .gs-user-balance,
+      span {
+        opacity: 1 !important;
+        display: inline;
+        transition-delay: 0.4s;
+        transition: opacity 0.3s ease-in;
+      }
+
+      .gs-user-balance {
+        display: flex !important;
+      }
+
+      .el-menu-item {
+        i {
+          margin-right: 10px !important;
+        }
+
+        span {
+          opacity: 1;
+          display: inline;
+          transition-delay: 0.4s;
+          transition: opacity 0.3s ease-in;
+        }
+      }
+
+      &.open {
+        left: 0;
+        transition: left 0.3s ease-out;
+      }
+    }
+
+    .gs-mobile-sidebar--toggle {
+      display: flex;
+    }
+
+    .gs-app-layout-main {
+      left: 0;
+      width: 100%;
+    }
   }
 }
 </style>

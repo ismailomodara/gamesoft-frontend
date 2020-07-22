@@ -105,8 +105,8 @@ export default {
       errorMessage: '',
       passwordFieldType: 'password',
       form: {
-        email: 'gamesoft-test@mailinator.com',
-        password: 'sinzufunds'
+        email: 'user@gmail.com',
+        password: 'password'
       },
       rememberMe: '',
       rules: {
