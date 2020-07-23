@@ -126,6 +126,12 @@
   }
 }
 
+@media (max-width: 1280px) {
+  .el-card {
+    margin-bottom: 50px;
+  }
+}
+
 /* ======== POPOVER ======= */
 .el-popover {
   width: 300px !important;

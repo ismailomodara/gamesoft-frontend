@@ -53,17 +53,31 @@
           <div class="gs-layout--heading">
             <h3>Messages</h3>
           </div>
-          <messages />
+          <el-card>
+            <div class="gs-messages">
+              <div class="gs-empty-message">
+                <img src="@/assets/img/new-message.svg" alt />
+              </div>
+              <p>You have 2 new messages</p>
+              <el-button
+                size="mini"
+                type="primary"
+                @click="showMessenger = true"
+                >Show me</el-button
+              >
+            </div>
+          </el-card>
         </el-col>
       </el-row>
     </div>
+    <messenger :show.sync="showMessenger" />
   </div>
 </template>
 
 <script>
 import CategoryItem from '../../components/User/Categories/CategoryItem'
 import RecentTransactions from '../../components/User/Wallet/RecentTransactions'
-import Messages from '../../components/User/Messages'
+import Messenger from '../../components/User/Messenger'
 
 export default {
   name: 'Dashboard',
@@ -71,7 +85,7 @@ export default {
   components: {
     CategoryItem,
     RecentTransactions,
-    Messages
+    Messenger
   },
   data() {
     return {
@@ -94,7 +108,8 @@ export default {
           score: 150,
           percentage: 50
         }
-      ]
+      ],
+      showMessenger: false
     }
   },
   methods: {}
@@ -125,5 +140,38 @@ a {
   font-size: 12px;
   font-weight: 500;
   margin-right: 15px;
+}
+
+.gs-messages {
+  position: relative;
+  height: 320px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+
+  .gs-empty-message {
+    height: 120px;
+    width: auto;
+    margin-bottom: 20px;
+
+    img {
+      height: 100%;
+      width: auto;
+    }
+  }
+
+  p {
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 1280px) {
+  .gs-credit {
+    margin-bottom: 25px;
+  }
 }
 </style>
